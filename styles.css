@@ -614,6 +614,23 @@ samp {
 
 /* ── panels & grids ─────────────────────────────────────────────────── */
 
+/* A grid/flex item's automatic minimum size is its content, so a wide
+   transcript inside one shoves the whole page sideways no matter how many
+   `overflow-x: auto` containers it sits in. min-width:0 is what actually
+   lets the inner scroller do its job. */
+.grid > *,
+.shots > *,
+.steps > *,
+.step .code,
+.step .code pre,
+.panel,
+.term,
+.term__body,
+.code,
+.code pre {
+  min-width: 0;
+}
+
 .grid {
   display: grid;
   gap: 16px;
@@ -666,6 +683,7 @@ samp {
   counter-reset: step;
   margin-top: 36px;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 14px;
 }
 
