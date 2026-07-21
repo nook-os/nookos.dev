@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NookOS — a remote Claude is just a shell you can type into</title>
+<meta name="description" content="NookOS is an open source, self-hosted control plane for development work. Start a Claude, Codex or shell session on any machine in your fleet and type into it — no ssh, no tmux, no hostname, no port forwarding. Apache-2.0.">
+<meta name="theme-color" content="#0e1012">
+<link rel="canonical" href="https://nookos.dev/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nookos.dev/">
+<meta property="og:title" content="NookOS — a remote Claude is just a shell you can type into">
+<meta property="og:description" content="Open source, self-hosted control plane for machines, workspaces and persistent agent sessions. No ssh. No tmux. Apache-2.0.">
+<meta property="og:image" content="https://nookos.dev/assets/screenshots/dashboard.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e1012'/><text x='16' y='23' font-family='monospace' font-size='20' font-weight='bold' fill='%23f5b301' text-anchor='middle'>n</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap masthead__inner">
+    <a class="brand" href="#top">
+      <span class="brand__mark">▚</span>
+      <span>NookOS</span>
+      <span class="brand__tag">workspace os</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#what">What it is</a>
+      <a href="#screens">Screenshots</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://github.com/nook-os/nook-os">GitHub</a>
+      <a class="nav__cta" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ── hero ─────────────────────────────────────────────────────────── -->
+<section class="hero" id="top">
+  <div class="wrap hero__inner">
+    <div class="badges">
+      <span class="badge badge--accent">Apache-2.0</span>
+      <span class="badge">Self-hosted</span>
+      <span class="badge">No telemetry</span>
+      <span class="badge">Rust + React</span>
+    </div>
+
+    <h1>A remote Claude is just a <span class="amber">shell you can type into.</span></h1>
+
+    <p class="hero__sub">
+      NookOS is an open source control plane for development work. Start a coding
+      agent on <strong>any machine you own</strong> and hold a conversation with it
+      from <strong>any other machine</strong>. No ssh. No tmux. No hostname, no key,
+      no port forwarding. Sessions are persistent — close the laptop and the work
+      keeps running.
+    </p>
+
+    <div class="term" role="img" aria-label="Terminal transcript: nook start opens a Claude Code session named fleet-proof on the machine azul; nook exec sends a question to it and prints the answer; the session keeps running afterwards.">
+      <div class="term__bar">
+        <span class="term__dot"></span>
+        <span class="term__title">fleet-proof · runtime=claude · node=azul</span>
+        <span class="term__meta">status=running</span>
+      </div>
+      <pre class="term__body" aria-hidden="true"><span class="dim"># from your laptop. azul is a box across the room, or across the world.</span>
+<span class="prompt">$</span> <span class="cmd">nook start acme/checkout-api <span class="flag">--node</span> azul <span class="flag">--runtime</span> claude <span class="flag">--name</span> fleet-proof</span>
+<span class="ok">✓</span> <span class="out">fleet-proof — claude on azul</span>
+
+<span class="prompt">$</span> <span class="cmd">nook exec fleet-proof 'what machine are you on, and what is this repo?'</span>
+<span class="out">❯ what machine are you on, and what is this repo?</span>
+<span class="ok">●</span> <span class="out">I'm on azul (linux), in /srv/work/acme/checkout-api — the payment</span>
+<span class="out">  capture and settlement service. Want me to run the tests?</span>
+<span class="dim">✻ thought for 3s</span>
+
+<span class="prompt">$</span> <span class="cmd">nook exec fleet-proof 'add retries to the gateway client, then run the tests' <span class="flag">--timeout</span> 600</span>
+<span class="dim"># close the lid. it keeps going. come back tomorrow and `nook read` still works.</span>
+<span class="prompt">$</span> <span class="caret"></span></pre>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn btn--primary" href="#install">Run it yourself</a>
+      <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
+      <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── proof ────────────────────────────────────────────────────────── -->
+<section class="section" id="proof">
+  <div class="wrap reveal">
+    <p class="eyebrow">Not a mockup</p>
+    <h2>This is already how the work gets done.</h2>
+    <div class="callout">
+      <p>
+        An agent running on one machine started a Claude Code session on a second
+        machine, sent it prompts, read its answers, and drove the work to
+        completion — using nothing but <code>nook start</code>,
+        <code>nook send</code>, <code>nook read</code> and <code>nook exec</code>.
+        No ssh session was opened. No port was forwarded. No hostname was typed.
+      </p>
+      <p>
+        NookOS ships that capability as an agent skill, so any agent you run can
+        do the same thing: <code>./skills/install.sh --host &lt;box&gt;</code>.
+        The protocol is small enough to explain in one line — <b>send types,
+        read looks, exec does both and waits</b> — which is exactly why an agent
+        can pick it up without a wrapper library.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── how ──────────────────────────────────────────────────────────── -->
+<section class="section" id="how">
+  <div class="wrap reveal">
+    <p class="eyebrow">How it works</p>
+    <h2>Four commands is the whole protocol.</h2>
+    <p class="lede">
+      You name a workspace and a runtime. The control plane finds a machine that
+      has that repo checked out and starts the session there. You never address
+      the machine directly.
+    </p>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step__head"><h3>Look at the fleet</h3></div>
+        <p>Machines, repos and running sessions, kubectl-style. Every node reports its own capabilities, including which runtimes it actually has installed.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook get nodes
+NAME     PLATFORM  STATUS  RUNTIMES
+azul     linux     online  claude,codex,bash
+crimson  linux     online  hermes,bash
+
+<span class="prompt">$ </span>nook get workspaces
+<span class="prompt">$ </span>nook get sessions</pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Start a session anywhere</h3></div>
+        <p>Pick the runtime you want — <code>claude</code>, <code>codex</code>, <code>hermes</code>, <code>bash</code>, <code>zsh</code>. Drop <code>--node</code> and the scheduler picks an online machine that has the repo.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook start acme/checkout-api --runtime claude
+<span class="prompt">$ </span>nook start acme/checkout-api --node azul --runtime claude --name refactor-auth</pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Talk to it</h3></div>
+        <p><code>exec</code> polls until the screen stops changing for two consecutive reads — the only honest way to know an agent has finished, because thinking time is unpredictable and a fixed <code>sleep</code> either truncates the answer or wastes minutes.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook exec refactor-auth 'move the token refresh into middleware' --timeout 600
+<span class="prompt">$ </span>nook send refactor-auth 'yes'      <span class="comment"># answer a permission prompt</span>
+<span class="prompt">$ </span>nook read refactor-auth --lines 400</pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Fan out</h3></div>
+        <p>Sessions are independent and persistent. Start work on three repos across three machines, go and do something else, and collect the results when you get back.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook start acme/checkout-api    --node azul    --runtime claude --name api
+<span class="prompt">$ </span>nook start widgets/web-dashboard --node crimson --runtime claude --name web
+<span class="prompt">$ </span>nook send api 'upgrade sqlx and fix the fallout'
+<span class="prompt">$ </span>nook send web 'migrate settings to the new form component'</pre>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── what ─────────────────────────────────────────────────────────── -->
+<section class="section" id="what">
+  <div class="wrap reveal">
+    <p class="eyebrow">What it is</p>
+    <h2>A control plane for machines, workspaces and sessions.</h2>
+    <p class="lede">
+      NookOS does not replace your editor, your Git, or your AI. It coordinates
+      everything around them, and it keeps the coordination in one place you own.
+    </p>
+
+    <div class="grid grid--3">
+      <article class="panel">
+        <h3>Nodes</h3>
+        <p>Machines join with a token and connect <b>outbound</b> over WebSocket — no inbound SSH, no public ports. Each reports CPU, memory, load, session capacity and installed runtimes, live.</p>
+      </article>
+      <article class="panel">
+        <h3>Workspaces</h3>
+        <p>A workspace is a repo, not a machine. The same workspace can exist on many nodes; a repository's identity is its git remote, so two checkouts of the same thing are the same thing.</p>
+      </article>
+      <article class="panel">
+        <h3>Sessions</h3>
+        <p>tmux-backed and persistent, streamed to xterm.js in the browser. They survive page refreshes, network drops, your process exiting and the node restarting.</p>
+      </article>
+      <article class="panel">
+        <h3>Runtimes</h3>
+        <p>A session runs whatever you choose — <code>bash</code>, <code>zsh</code>, <code>claude</code>, <code>hermes</code>, <code>codex</code>. Ask a node for a runtime it doesn't have and it fails immediately, not mysteriously.</p>
+      </article>
+      <article class="panel">
+        <h3>Board</h3>
+        <p>Kanban that actually dispatches work. Triage → Todo → In Progress → Done, where <i>start work</i> creates a worktree and a session, and <i>prune</i> tears the worktree back down.</p>
+      </article>
+      <article class="panel">
+        <h3>Activity</h3>
+        <p>Everything produces an event, streamed live over WebSocket. Plus rolling per-workspace notes, so the context of a piece of work lives next to the work.</p>
+      </article>
+      <article class="panel">
+        <h3>MCP surface</h3>
+        <p>An MCP server at <code>/mcp</code> exposes the whole system to any MCP client: list workspaces, nodes and sessions, start a session, send to it, read activity, create a task.</p>
+      </article>
+      <article class="panel">
+        <h3>Identity</h3>
+        <p>Generic OIDC against any standards-compliant IdP, authorization code + PKCE, multi-tenant from the schema up. Access tokens are issued and revoked in the UI.</p>
+      </article>
+      <article class="panel">
+        <h3>Desktop</h3>
+        <p>A Tauri shell wraps the same application, so the fleet is a native window when you want one and a browser tab when you don't.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── screenshots ──────────────────────────────────────────────────── -->
+<section class="section" id="screens">
+  <div class="wrap reveal">
+    <p class="eyebrow">The application</p>
+    <h2>Mission control, in amber.</h2>
+    <p class="lede">
+      One screen for every machine, every repo and every running session you own.
+    </p>
+
+    <div class="shots">
+      <figure class="shot shot--wide">
+        <img src="assets/screenshots/dashboard.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="The NookOS dashboard: a dark amber-on-charcoal panel layout showing online nodes, recent workspaces, running sessions and a live activity feed.">
+        <figcaption><b>Dashboard</b>Nodes, workspaces, running sessions and the live activity feed on one screen.</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="assets/screenshots/session-claude.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="A NookOS session view with Claude Code running live in the embedded terminal, mid-conversation inside a repository.">
+        <figcaption><b>A session, live</b>Claude Code running in a persistent tmux-backed session, streamed into the browser.</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="assets/screenshots/workspaces.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="The NookOS workspaces list, showing repositories with their branch, dirty state and which machines hold a checkout.">
+        <figcaption><b>Workspaces</b>Every repo NookOS knows about, and which machines hold a checkout of it.</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="assets/screenshots/board.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="The NookOS kanban board with Triage, Todo, In Progress and Done columns holding task cards.">
+        <figcaption><b>Board</b>Kanban that dispatches: a card becomes a worktree, a machine and a session.</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="assets/screenshots/nodes.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="The NookOS nodes page listing machines with live capacity bars for CPU, memory and active sessions.">
+        <figcaption><b>Nodes</b>Live CPU, memory, load and session capacity, so you can see what can take the work.</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="assets/screenshots/new-work.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="The New Work modal in NookOS, offering to clone a repository, add a worktree, start a new project or open an existing workspace, with machine and runtime pickers.">
+        <figcaption><b>New Work</b>Clone, add a worktree, or open what's already there — then pick the machine and the runtime.</figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="assets/screenshots/settings-tokens.png" width="2560" height="1440" loading="lazy" decoding="async"
+             alt="The NookOS settings page on the Access tokens tab, listing issued tokens with their scope and creation date.">
+        <figcaption><b>Access tokens</b>Issue a user token to drive the whole fleet from the CLI; revoke it in one click.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ── install ──────────────────────────────────────────────────────── -->
+<section class="section" id="install">
+  <div class="wrap reveal">
+    <p class="eyebrow">Install</p>
+    <h2>Docker first. Up in one command.</h2>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step__head"><h3>Bring up the control plane</h3></div>
+        <p>Point <code>OIDC_*</code> at your identity provider, or leave dev sign-in on while you look around. Open <b>http://localhost:5173</b>.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>git clone https://github.com/nook-os/nook-os
+<span class="prompt">$ </span>cd nook-os
+<span class="prompt">$ </span>cp .env.example .env
+<span class="prompt">$ </span>./run.sh</pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Add a machine</h3></div>
+        <p>In the UI: <b>Nodes → add node</b>, then run this on the machine you want to add. It connects outbound; nothing needs to be reachable from the internet.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook join --server https://nook.example.com --token nook_join_...
+<span class="prompt">$ </span>nook run</pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Get a user token</h3></div>
+        <p>A node token is confined to its own machine on purpose — it sits in a file on a box that runs other people's code, so one compromised machine must not become every machine. A <b>user</b> token is what drives the fleet.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook login --token nook_user_...
+<span class="prompt">$ </span>nook whoami</pre>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Teach your agents</h3></div>
+        <p>NookOS ships as an agent skill. Install it and your agent can start and drive sessions across the fleet on its own.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>./skills/install.sh                 <span class="comment"># this machine</span>
+<span class="prompt">$ </span>./skills/install.sh --host crimson  <span class="comment"># and that one</span></pre>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ── security ─────────────────────────────────────────────────────── -->
+<section class="section" id="security">
+  <div class="wrap reveal">
+    <p class="eyebrow">Posture</p>
+    <h2>Self-hosted means self-hosted.</h2>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th scope="col">Property</th><th scope="col">How it behaves</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Network</td><td>Nodes dial <b>out</b> over WebSocket. No inbound SSH, no public ports, no reverse tunnel to a vendor.</td></tr>
+          <tr><td>Telemetry</td><td>None. There is no phone-home, no analytics endpoint, and no account required to run it.</td></tr>
+          <tr><td>Credentials</td><td>A node token can only act on its own machine. Only a user token drives other machines, and it lives <code>0600</code> in your home directory.</td></tr>
+          <tr><td>Data</td><td>Your Postgres, your disks, your repos. Git stays the source of truth; NookOS coordinates, it does not own.</td></tr>
+          <tr><td>Licence</td><td>Apache-2.0. Fork it, run it, embed it, sell services on it.</td></tr>
+          <tr><td>Extensibility</td><td>Rust owns the types: OpenAPI is generated from the code and TypeScript from OpenAPI, so third-party clients cannot drift.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── faq ──────────────────────────────────────────────────────────── -->
+<section class="section" id="faq">
+  <div class="wrap reveal">
+    <p class="eyebrow">Questions</p>
+    <h2>The ones people actually ask.</h2>
+
+    <div class="faq">
+      <details>
+        <summary>Why not just ssh and tmux?</summary>
+        <p>You can. You will also be managing hostnames, keys, jump hosts, VPN state, port forwards and a mental map of which box has which repo — and none of that is addressable by an agent without giving it shell credentials to everything.</p>
+        <p>NookOS gives you one verb per intent instead: name the repo, name the runtime, go. The machine is an implementation detail the control plane resolves.</p>
+      </details>
+      <details>
+        <summary>Do sessions really survive?</summary>
+        <p>Yes — they're tmux sessions on the node, not proxied processes. Your laptop closing, your terminal dying, the network dropping and the control plane restarting are all survivable. Come back hours later and <code>nook read</code> still prints the screen and its scrollback.</p>
+      </details>
+      <details>
+        <summary>What happens when a node goes offline?</summary>
+        <p>The session is marked as having an offline node and starts working again when the machine reconnects. The tmux session was never destroyed; only the transport went away.</p>
+      </details>
+      <details>
+        <summary>Does it work with agents other than Claude?</summary>
+        <p><code>--runtime</code> is any executable the node reports. Claude Code, Codex and Hermes are the ones in daily use; a plain shell is a first-class runtime, and adding another is a matter of it being installed on the machine.</p>
+      </details>
+      <details>
+        <summary>Can an AI drive NookOS itself?</summary>
+        <p>That's the point. There's an MCP server at <code>/mcp</code> covering the whole surface, and an agent skill that teaches the CLI. The built-in dispatcher recommends where work should run — it recommends, it never acts. Humans approve.</p>
+      </details>
+      <details>
+        <summary>What's not done yet?</summary>
+        <p>Multiple worktrees of the same app on one machine can collide on ports, and there's no automatic fix yet. Kanban federation to Jira, GitHub, Linear and Trello sits behind a provider trait but ships local-only today. The roadmap is in the repo, not in a press release.</p>
+      </details>
+      <details>
+        <summary>Is there a hosted version?</summary>
+        <p>A managed service is coming. The self-hosted build is not a crippled tier — it is the whole product, and it always will be. <a href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Join the waitlist</a> if you'd rather someone else ran the control plane.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── finale ───────────────────────────────────────────────────────── -->
+<section class="section finale" id="start">
+  <div class="wrap reveal">
+    <h2>Your machines, one control plane.</h2>
+    <p class="lede">
+      Free, open source, Apache-2.0, self-hosted, no telemetry. Clone it and have
+      a fleet in about five minutes.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="https://github.com/nook-os/nook-os">Get NookOS</a>
+      <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <a class="brand" href="#top"><span class="brand__mark">▚</span><span>NookOS</span></a>
+    <a href="https://github.com/nook-os/nook-os">Source</a>
+    <a href="https://github.com/nook-os/nook-os/blob/main/PLAN.md">Vision</a>
+    <a href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">waitlist@nookos.dev</a>
+    <span class="footer__legal">Apache-2.0 · <span id="year">2026</span></span>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
+</body>
+</html>
