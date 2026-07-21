@@ -1,8 +1,12 @@
 # nookos.dev
 
 The public marketing site for [NookOS](https://github.com/nook-os/nook-os), an
-open source workspace operating system. Served straight from this repository by
-GitHub Pages.
+open source, self-hosted fleet control plane. Served straight from this
+repository by GitHub Pages.
+
+> **Before this goes live:** `nook-os/nook-os` is currently a **private**
+> repository. This site links to it in six places and calls the project open
+> source, so those links 404 for every visitor until the source repo is public.
 
 ## What's here
 

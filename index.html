@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NookOS — a remote Claude is just a shell you can type into</title>
-<meta name="description" content="NookOS is an open source, self-hosted control plane for development work. Start a Claude, Codex or shell session on any machine in your fleet and type into it — no ssh, no tmux, no hostname, no port forwarding. Apache-2.0.">
+<meta name="description" content="NookOS is an open source, self-hosted control plane for your fleet. Start a Claude, Codex or shell session on any machine you own and type into it — no ssh, no tmux, no hostname, no port forwarding. Sessions persist. Apache-2.0.">
 <meta name="theme-color" content="#0e1012">
 <link rel="canonical" href="https://nookos.dev/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nookos.dev/">
 <meta property="og:title" content="NookOS — a remote Claude is just a shell you can type into">
-<meta property="og:description" content="Open source, self-hosted control plane for machines, workspaces and persistent agent sessions. No ssh. No tmux. Apache-2.0.">
+<meta property="og:description" content="Open source, self-hosted fleet control plane: machines, workspaces and persistent agent sessions. No ssh. No tmux. Apache-2.0.">
 <meta property="og:image" content="https://nookos.dev/assets/screenshots/dashboard.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e1012'/><text x='16' y='23' font-family='monospace' font-size='20' font-weight='bold' fill='%23f5b301' text-anchor='middle'>n</text></svg>">
@@ -25,7 +25,7 @@
     <a class="brand" href="#top">
       <span class="brand__mark">▚</span>
       <span>NookOS</span>
-      <span class="brand__tag">workspace os</span>
+      <span class="brand__tag">fleet control plane</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">menu</button>
     <nav class="nav" id="nav" aria-label="Primary">
@@ -182,6 +182,9 @@ crimson  linux     online  hermes,bash
     <p class="lede">
       NookOS does not replace your editor, your Git, or your AI. It coordinates
       everything around them, and it keeps the coordination in one place you own.
+      Claude writes the code. Nook decides where it runs, remembers that it ran,
+      and is still holding the session when you come back — an operating system
+      for the work rather than for the machine.
     </p>
 
     <div class="grid grid--3">

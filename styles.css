@@ -247,6 +247,14 @@ samp {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The wordmark wins the fight for the top bar on small screens. */
+@media (max-width: 560px) {
+  .brand__tag {
+    display: none;
+  }
 }
 
 .nav {
