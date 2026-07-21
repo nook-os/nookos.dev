@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NookOS — a remote Claude is just a shell you can type into</title>
+<title>NookOS — run coding agents on every machine you own</title>
 <meta name="description" content="NookOS is an open source, self-hosted control plane for your fleet. Start a Claude, Codex or shell session on any machine you own and type into it — no ssh, no tmux, no hostname, no port forwarding. Sessions persist. Apache-2.0.">
 <meta name="theme-color" content="#0e1012">
 <link rel="canonical" href="https://nookos.dev/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nookos.dev/">
-<meta property="og:title" content="NookOS — a remote Claude is just a shell you can type into">
+<meta property="og:title" content="NookOS — run coding agents on every machine you own">
 <meta property="og:description" content="Open source, self-hosted fleet control plane: machines, workspaces and persistent agent sessions. No ssh. No tmux. Apache-2.0.">
 <meta property="og:image" content="https://nookos.dev/assets/screenshots/dashboard.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -52,42 +52,60 @@
       <span class="badge">Rust + React</span>
     </div>
 
-    <h1>A remote Claude is just a <span class="amber">shell you can type into.</span></h1>
+    <pre class="boot" id="boot" aria-hidden="true"></pre>
+
+    <h1 class="hero__cmd">
+      <span class="hero__line"><span class="hero__dollar" aria-hidden="true">$</span> nook start <span class="tok-arg">&lt;repo&gt;</span></span>
+      <span class="hero__line hero__line--cont"><span class="tok-flag">--node</span> azul <span class="tok-flag">--runtime</span> claude<span class="caret caret--h1" aria-hidden="true"></span></span>
+    </h1>
 
     <p class="hero__sub">
-      NookOS is an open source control plane for development work. Start a coding
-      agent on <strong>any machine you own</strong> and hold a conversation with it
-      from <strong>any other machine</strong>. No ssh. No tmux. No hostname, no key,
-      no port forwarding. Sessions are persistent — close the laptop and the work
-      keeps running.
+      That starts Claude Code <strong>on a different computer</strong>.
+      <code>nook exec</code> types at it and waits for the answer. No ssh, no tmux,
+      no hostname, no port to forward. Close your laptop and it keeps working.
     </p>
-
-    <div class="term" role="img" aria-label="Terminal transcript: nook start opens a Claude Code session named fleet-proof on the machine azul; nook exec sends a question to it and prints the answer; the session keeps running afterwards.">
-      <div class="term__bar">
-        <span class="term__dot"></span>
-        <span class="term__title">fleet-proof · runtime=claude · node=azul</span>
-        <span class="term__meta">status=running</span>
-      </div>
-      <pre class="term__body" aria-hidden="true"><span class="dim"># from your laptop. azul is a box across the room, or across the world.</span>
-<span class="prompt">$</span> <span class="cmd">nook start acme/checkout-api <span class="flag">--node</span> azul <span class="flag">--runtime</span> claude <span class="flag">--name</span> fleet-proof</span>
-<span class="ok">✓</span> <span class="out">fleet-proof — claude on azul</span>
-
-<span class="prompt">$</span> <span class="cmd">nook exec fleet-proof 'what machine are you on, and what is this repo?'</span>
-<span class="out">❯ what machine are you on, and what is this repo?</span>
-<span class="ok">●</span> <span class="out">I'm on azul (linux), in /srv/work/acme/checkout-api — the payment</span>
-<span class="out">  capture and settlement service. Want me to run the tests?</span>
-<span class="dim">✻ thought for 3s</span>
-
-<span class="prompt">$</span> <span class="cmd">nook exec fleet-proof 'add retries to the gateway client, then run the tests' <span class="flag">--timeout</span> 600</span>
-<span class="dim"># close the lid. it keeps going. come back tomorrow and `nook read` still works.</span>
-<span class="prompt">$</span> <span class="caret"></span></pre>
-    </div>
 
     <div class="cta-row">
       <a class="btn btn--primary" href="#install">Run it yourself</a>
       <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
       <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
     </div>
+
+    <!-- Signature element: not a picture of a terminal, an actual one. The
+         seeded transcript is real markup so the story survives JS being off;
+         main.js only adds the prompt and the parser on top of it. -->
+    <div class="term term--live" id="shell">
+      <div class="term__bar">
+        <span class="term__dot"></span>
+        <span class="term__title">you@laptop — demo shell</span>
+        <span class="term__meta">simulated · nothing leaves your browser</span>
+      </div>
+      <div class="term__body" id="shellBody">
+<pre class="term__log" id="shellLog"><span class="dim"># azul is a box across the room. or across the world. same command.</span>
+<span class="prompt">$</span> <span class="cmd">nook start acme/checkout-api <span class="flag">--node</span> azul <span class="flag">--runtime</span> claude <span class="flag">--name</span> api</span>
+<span class="ok">✓</span> <span class="out">api — claude on azul</span>
+
+<span class="prompt">$</span> <span class="cmd">nook exec api 'what machine are you on, and what is this repo?'</span>
+<span class="out">❯ what machine are you on, and what is this repo?</span>
+<span class="ok">●</span> <span class="out">I'm on azul (linux), in /srv/work/acme/checkout-api — the payment</span>
+<span class="out">  capture and settlement service. Want me to run the tests?</span>
+<span class="dim">✻ thought for 3s</span>
+</pre>
+        <form class="term__form" id="shellForm" autocomplete="off">
+          <label class="term__prompt" for="shellInput"><span aria-hidden="true">$</span><span class="visually-hidden">Demo shell — type a nook command</span></label>
+          <input class="term__input" id="shellInput" name="shellInput" type="text"
+                 spellcheck="false" autocapitalize="off" autocorrect="off"
+                 placeholder="type `help` and press enter">
+        </form>
+      </div>
+      <p class="term__hint" id="shellHint">
+        Try <button type="button" class="chip" data-cmd="nook get nodes">nook get nodes</button>
+        <button type="button" class="chip" data-cmd="nook start acme/checkout-api --node azul --runtime claude --name api">nook start …</button>
+        <button type="button" class="chip" data-cmd="nook exec api 'run the tests'">nook exec …</button>
+        <span class="dim">↑ for history · tab to complete</span>
+      </p>
+    </div>
+    <div class="visually-hidden" id="shellLive" role="status" aria-live="polite"></div>
   </div>
 </section>
 
