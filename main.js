@@ -455,6 +455,7 @@
     else if ((/Linux|X11/.test(ua) || /Linux/.test(p)) && !/Android/.test(ua)) os = "linux";
     if (!os) return;
 
+    // Each card is a container of per-format links now, not one big anchor.
     const card = row.querySelector(`[data-os="${os}"]`);
     if (!card) return;
     card.dataset.current = "true";

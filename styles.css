@@ -1426,3 +1426,21 @@ details p + p {
     margin-left: auto;
   }
 }
+
+/* The cards became containers of links rather than one big link, so each
+   platform can offer its formats without a second click. */
+.app__name {
+  text-decoration: none;
+}
+.app__name:hover {
+  color: var(--accent);
+}
+.app__meta a {
+  color: var(--fg-faint);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--border-bright);
+}
+.app__meta a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
