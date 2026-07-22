@@ -1186,3 +1186,24 @@ details p + p {
     justify-content: center;
   }
 }
+
+/* Install/Deploy: a quieter line for caveats that belong next to a command
+   rather than buried in prose — "read it before you run it", "this hop will
+   break it". Small, dim, but not hidden. */
+.fineprint {
+  font-size: 0.85rem;
+  color: var(--fg-faint);
+  margin-top: 0.6rem;
+  line-height: 1.5;
+}
+.fineprint code {
+  font-size: 0.95em;
+}
+/* Sub-headings inside the Deploy section, between the prose and each snippet. */
+#deploy h3 {
+  margin-top: 2.2rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+  color: var(--fg-bright);
+  letter-spacing: 0.01em;
+}
