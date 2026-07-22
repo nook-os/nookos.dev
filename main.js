@@ -39,9 +39,12 @@
   // Short on purpose: it sets the scene, it doesn't hold the page hostage.
   const boot = document.getElementById("boot");
 
+  // Every value starts at the same column, and the node rows share their own
+  // grid — a status readout whose columns wander looks like output nobody
+  // checked.
   const BOOT_LINES = [
-    'nookos <i>v1.0</i> · fleet control plane · <i>apache-2.0</i>',
-    "probing fleet ......... <b>2 nodes online</b>",
+    'nookos <i>v1.0</i> · <i>apache-2.0</i>',
+    "nodes ................. <b>2 online</b>",
     "  azul     linux  <i>claude codex bash</i>",
     "  crimson  linux  <i>hermes bash</i>",
     "sessions .............. <b>1 attached</b>",

@@ -568,6 +568,7 @@ samp {
 /* ── boot sequence ──────────────────────────────────────────────────── */
 
 .boot {
+  font-family: var(--mono);
   font-size: 12.5px;
   line-height: 1.65;
   color: var(--fg-faint);
@@ -1209,26 +1210,41 @@ details p + p {
 }
 
 /* ── hero install ───────────────────────────────────────────────────────
-   The one command someone came here to run. Given its own weight in the
-   hero: an accent border so it reads as the primary action, and a little
-   more air than a code block gets elsewhere. */
-.hero__install {
-  margin: 1.6rem 0 1.4rem;
-  max-width: 46rem;
+   The one command the page exists to hand over. Same terminal chrome as the
+   demo shell, so it reads as something you run rather than a decorated link —
+   and given enough weight that it, not the headline, is what the eye lands on. */
+.term--install {
+  margin: 1.8rem 0 0.9rem;
+  max-width: 44rem;
+  border-color: var(--accent);
+  box-shadow: var(--glow-strong);
+}
+.term--install .term__bar {
+  border-bottom-color: var(--border-bright);
+}
+.term--install .term__title {
+  color: var(--accent);
 }
 .code--hero {
-  border-color: var(--accent);
-  box-shadow: var(--glow);
+  border: 0;
+  border-radius: 0;
   background: var(--terminal-bg);
+  margin: 0;
 }
 .code--hero pre {
-  font-size: 1.02rem;
+  font-size: 1.15rem;
+  line-height: 1.5;
   /* Room on the right so the copy button never sits on top of the command. */
-  padding: 0.95rem 4.5rem 0.95rem 1.1rem;
+  padding: 1.05rem 4.5rem 1.05rem 1.15rem;
   overflow-x: auto;
+  color: var(--fg-bright);
+}
+.code--hero .prompt {
+  color: var(--accent);
 }
 .hero__install-note {
-  margin: 0.7rem 0 0;
+  margin: 0 0 1.4rem;
+  max-width: 44rem;
   font-size: 0.85rem;
   line-height: 1.55;
   color: var(--fg-faint);
@@ -1242,19 +1258,29 @@ details p + p {
   color: var(--accent);
 }
 
+/* The demo section that used to live in the hero. */
+.section__lede {
+  color: var(--fg-dim);
+  max-width: 46rem;
+  margin-bottom: 1.4rem;
+}
+.section--demo .boot {
+  margin-bottom: 1.2rem;
+}
+
 @media (max-width: 640px) {
   /* Wrap rather than scroll. It is one short command, and a horizontal
      scrollbar under the single thing the page is asking you to run reads as
      something being cut off. */
   .code--hero pre {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     white-space: pre-wrap;
     word-break: break-word;
     overflow-x: visible;
-    padding: 0.85rem 1rem 2.6rem;
+    padding: 0.9rem 1rem 2.7rem;
   }
   /* Below the command on a phone, where there is no room beside it. */
-  .code--hero .copy {
+  .term--install .copy {
     top: auto;
     bottom: 0.5rem;
     right: 0.6rem;

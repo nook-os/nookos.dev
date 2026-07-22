@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nookos.dev/">
 <meta property="og:title" content="NookOS — run coding agents on every machine you own">
-<meta property="og:description" content="Open source, self-hosted fleet control plane: machines, workspaces and persistent agent sessions. No ssh. No tmux. Apache-2.0.">
+<meta property="og:description" content="Start a Claude, Codex or shell session on any machine you own, and type into it. Self-hosted, open source, no ssh and no port forwarding. Apache-2.0.">
 <meta property="og:image" content="https://nookos.dev/assets/screenshots/dashboard.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e1012'/><text x='16' y='23' font-family='monospace' font-size='20' font-weight='bold' fill='%23f5b301' text-anchor='middle'>n</text></svg>">
@@ -25,7 +25,7 @@
     <a class="brand" href="#top">
       <span class="brand__mark">▚</span>
       <span>NookOS</span>
-      <span class="brand__tag">fleet control plane</span>
+      <span class="brand__tag">agent sessions, any machine</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">menu</button>
     <nav class="nav" id="nav" aria-label="Primary">
@@ -53,8 +53,6 @@
       <span class="badge">Rust + React</span>
     </div>
 
-    <pre class="boot" id="boot" aria-hidden="true"></pre>
-
     <h1 class="hero__cmd">
       <span class="hero__line"><span class="hero__dollar" aria-hidden="true">$</span> nook start <span class="tok-arg">&lt;repo&gt;</span></span>
       <span class="hero__line hero__line--cont"><span class="tok-flag">--node</span> azul <span class="tok-flag">--runtime</span> claude<span class="caret caret--h1" aria-hidden="true"></span></span>
@@ -66,26 +64,43 @@
       no hostname, no port to forward. Close your laptop and it keeps working.
     </p>
 
-    <!-- The install command belongs here, not halfway down the page. Someone
-         who is already convinced should not have to go looking for it. -->
-    <div class="hero__install">
+    <!-- The one command the whole site is asking for, in the same terminal
+         chrome as the demo shell so it reads as something you run, not a
+         decorated link. -->
+    <div class="term term--install">
+      <div class="term__bar">
+        <span class="term__dot"></span>
+        <span class="term__title">install</span>
+        <span class="term__meta">linux · macos · intel · apple silicon</span>
+      </div>
       <div class="code code--hero">
         <pre><span class="prompt">$ </span>curl -fsSL https://nookos.dev/install.sh | sh</pre>
       </div>
-      <p class="hero__install-note">
-        Linux and macOS, Intel and Apple silicon. Asks whether this machine is a
-        control plane or a node, then walks you through it. Verifies the download
-        against a published checksum — and
-        <a href="https://github.com/nook-os/nook-os/blob/main/install/install.sh">reading it first</a>
-        is the correct instinct.
-      </p>
     </div>
+    <p class="hero__install-note">
+      Asks whether this machine is a control plane or a node, then walks you
+      through it. Checks the download against a published checksum — and
+      <a href="https://github.com/nook-os/nook-os/blob/main/install/install.sh">reading it first</a>
+      is the correct instinct.
+    </p>
 
     <div class="cta-row">
       <a class="btn btn--primary" href="#install">What it will ask</a>
       <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
       <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
     </div>
+
+  </div>
+</section>
+
+<!-- ── demo ─────────────────────────────────────────────────────────── -->
+<section class="section section--demo" id="demo">
+  <div class="wrap reveal">
+    <p class="eyebrow">Try it</p>
+    <h2>A shell that is not on this computer.</h2>
+    <p class="section__lede">Simulated, in your browser — but the commands are the real ones. The boot readout is what <code>nook</code> prints when it comes up.</p>
+
+    <pre class="boot" id="boot" aria-hidden="true"></pre>
 
     <!-- Signature element: not a picture of a terminal, an actual one. The
          seeded transcript is real markup so the story survives JS being off;
