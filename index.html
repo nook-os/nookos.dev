@@ -106,9 +106,9 @@
         </a>
       </div>
       <p class="apps__note">
-        Optional — the same UI runs in any browser at your control plane's
-        address. <a href="#install">Unsigned for now</a>, so macOS and Windows
-        will each want one click to confirm.
+        Signed and notarised by Apple, so it opens like any other Mac app.
+        Windows still shows a SmartScreen prompt until its certificate lands.
+        The same UI runs in any browser at your control plane's address.
       </p>
     </div>
 
@@ -398,13 +398,14 @@ crimson  linux     online  hermes,bash
         </p>
 
         <p class="fineprint">
-          <b>The bundles are not code-signed yet.</b> macOS will say the app is
-          from an unidentified developer — right-click the app and choose
-          <b>Open</b> the first time, or run
-          <code>xattr -d com.apple.quarantine /Applications/NookOS.app</code>.
-          Windows SmartScreen will want <b>More info → Run anyway</b>. Signing
-          needs a paid certificate from Apple and a CA respectively; until then,
-          the browser version needs none of this.
+          macOS builds are signed with a Developer ID certificate and notarised
+          by Apple, so Gatekeeper accepts them without a right-click. The
+          notarisation ticket is stapled to the bundle, which means it also
+          works on a machine that is offline.
+        </p>
+        <p class="fineprint">
+          Windows is not signed yet — SmartScreen will want
+          <b>More info → Run anyway</b> until a certificate is in place.
         </p>
       </li>
 
