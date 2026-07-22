@@ -1207,3 +1207,56 @@ details p + p {
   color: var(--fg-bright);
   letter-spacing: 0.01em;
 }
+
+/* ── hero install ───────────────────────────────────────────────────────
+   The one command someone came here to run. Given its own weight in the
+   hero: an accent border so it reads as the primary action, and a little
+   more air than a code block gets elsewhere. */
+.hero__install {
+  margin: 1.6rem 0 1.4rem;
+  max-width: 46rem;
+}
+.code--hero {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+  background: var(--terminal-bg);
+}
+.code--hero pre {
+  font-size: 1.02rem;
+  /* Room on the right so the copy button never sits on top of the command. */
+  padding: 0.95rem 4.5rem 0.95rem 1.1rem;
+  overflow-x: auto;
+}
+.hero__install-note {
+  margin: 0.7rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--fg-faint);
+}
+.hero__install-note a {
+  color: var(--fg-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hero__install-note a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  /* Wrap rather than scroll. It is one short command, and a horizontal
+     scrollbar under the single thing the page is asking you to run reads as
+     something being cut off. */
+  .code--hero pre {
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-x: visible;
+    padding: 0.85rem 1rem 2.6rem;
+  }
+  /* Below the command on a phone, where there is no room beside it. */
+  .code--hero .copy {
+    top: auto;
+    bottom: 0.5rem;
+    right: 0.6rem;
+  }
+}

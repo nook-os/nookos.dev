@@ -66,8 +66,23 @@
       no hostname, no port to forward. Close your laptop and it keeps working.
     </p>
 
+    <!-- The install command belongs here, not halfway down the page. Someone
+         who is already convinced should not have to go looking for it. -->
+    <div class="hero__install">
+      <div class="code code--hero">
+        <pre><span class="prompt">$ </span>curl -fsSL https://nookos.dev/install.sh | sh</pre>
+      </div>
+      <p class="hero__install-note">
+        Linux and macOS, Intel and Apple silicon. Asks whether this machine is a
+        control plane or a node, then walks you through it. Verifies the download
+        against a published checksum — and
+        <a href="https://github.com/nook-os/nook-os/blob/main/install/install.sh">reading it first</a>
+        is the correct instinct.
+      </p>
+    </div>
+
     <div class="cta-row">
-      <a class="btn btn--primary" href="#install">Run it yourself</a>
+      <a class="btn btn--primary" href="#install">What it will ask</a>
       <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
       <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
     </div>
