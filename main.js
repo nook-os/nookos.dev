@@ -140,8 +140,12 @@
 
     const findSession = (name) => sessions.find((s) => s.name === name);
 
-    async function agentReply(prompt) {
-      write(`<span class="out">❯ ${esc(prompt)}</span>`);
+    // Mirrors `nook exec`: the prompt echoed back, the reply, then a dim
+    // trailer naming the runtime and its state. Kept deliberately in step with
+    // crates/nook-node/src/style.rs — a demo that shows output the CLI does not
+    // produce is a lie people discover after installing.
+    async function agentReply(prompt, session) {
+      write(`<span class="flag">❯</span> <span class="out">${esc(prompt)}</span>`);
       await sleep(420);
       const lines = answerFor(prompt);
       write(`<span class="ok">●</span> <span class="out">${lines[0]}</span>`);
@@ -150,7 +154,7 @@
         out("  " + l);
       }
       await sleep(140);
-      dim(`✻ thought for ${(Math.random() * 4 + 1).toFixed(0)}s`);
+      dim(`  ${esc(session.runtime)} · ${esc(session.status)}`);
     }
 
     // Plain text, escaped only after padding — pad on what the eye sees, not
@@ -269,6 +273,7 @@
         sessions.push({ name, workspace: wsRec.name, runtime, node, status: "running" });
         ok(`${esc(name)} — ${esc(runtime)} on ${esc(node)}`);
         dim(`  nook exec ${esc(name)} 'your prompt'`);
+        dim(`  nook read ${esc(name)}`);
         busy = false;
         announce(`Session ${name} started on ${node}`);
         return;
@@ -288,7 +293,7 @@
           return dim(`  nook read ${esc(name)}   # look when you're ready`);
         }
         busy = true;
-        await agentReply(prompt);
+        await agentReply(prompt, s);
         busy = false;
         announce("The agent replied.");
         return;

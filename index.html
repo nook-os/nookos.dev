@@ -78,14 +78,13 @@
       </div>
     </div>
     <p class="hero__install-note">
-      Asks whether this machine is a control plane or a node, then walks you
-      through it. Checks the download against a published checksum — and
-      <a href="https://github.com/nook-os/nook-os/blob/main/install/install.sh">reading it first</a>
-      is the correct instinct.
+      Asks a few questions, then sets it up. Nothing to clone, nothing to build.
+      <a href="https://github.com/nook-os/nook-os/blob/main/install/install.sh">Read the script</a>
+      before you pipe it to a shell — it is 200 lines and you should.
     </p>
 
     <div class="cta-row">
-      <a class="btn btn--primary" href="#install">What it will ask</a>
+      <a class="btn btn--primary" href="#install">Install guide</a>
       <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
       <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
     </div>
@@ -115,12 +114,14 @@
 <pre class="term__log" id="shellLog"><span class="dim"># azul is a box across the room. or across the world. same command.</span>
 <span class="prompt">$</span> <span class="cmd">nook start acme/checkout-api <span class="flag">--node</span> azul <span class="flag">--runtime</span> claude <span class="flag">--name</span> api</span>
 <span class="ok">✓</span> <span class="out">api — claude on azul</span>
+<span class="dim">  nook exec api 'your prompt'</span>
+<span class="dim">  nook read api</span>
 
 <span class="prompt">$</span> <span class="cmd">nook exec api 'what machine are you on, and what is this repo?'</span>
-<span class="out">❯ what machine are you on, and what is this repo?</span>
+<span class="flag">❯</span> <span class="out">what machine are you on, and what is this repo?</span>
 <span class="ok">●</span> <span class="out">I'm on azul (linux), in /srv/work/acme/checkout-api — the payment</span>
 <span class="out">  capture and settlement service. Want me to run the tests?</span>
-<span class="dim">✻ thought for 3s</span>
+<span class="dim">  claude · running</span>
 </pre>
         <form class="term__form" id="shellForm" autocomplete="off">
           <label class="term__prompt" for="shellInput"><span aria-hidden="true">$</span><span class="visually-hidden">Demo shell — type a nook command</span></label>
@@ -354,6 +355,17 @@ crimson  linux     online  hermes,bash
         <div class="code">
           <pre><span class="prompt">$ </span>curl -fsSL https://your-nook/install.sh | sh -s -- --token nook_join_...</pre>
         </div>
+      </li>
+
+      <li class="step">
+        <div class="step__head"><h3>Optional: the desktop app</h3></div>
+        <p>The same UI in a native window instead of a browser tab. It talks to your control plane like any other client — there is nothing extra to install on the server, and you can skip it entirely.</p>
+        <p class="fineprint">
+          <a href="https://github.com/nook-os/nook-os/releases/latest">Download from the latest release</a>
+          — <code>.dmg</code> for macOS (Intel and Apple silicon),
+          <code>.AppImage</code> and <code>.deb</code> for Linux,
+          <code>.msi</code> for Windows.
+        </p>
       </li>
 
       <li class="step">

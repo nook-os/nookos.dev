@@ -1231,13 +1231,25 @@ details p + p {
   background: var(--terminal-bg);
   margin: 0;
 }
+.code--hero {
+  /* Positioning context for the copy button, which centres against THIS box
+     rather than the whole terminal — otherwise it aligns to the title bar. */
+  position: relative;
+}
 .code--hero pre {
   font-size: 1.15rem;
   line-height: 1.5;
   /* Room on the right so the copy button never sits on top of the command. */
-  padding: 1.05rem 4.5rem 1.05rem 1.15rem;
+  padding: 1.05rem 4.75rem 1.05rem 1.15rem;
   overflow-x: auto;
   color: var(--fg-bright);
+}
+/* Centred on the command, not pinned to a corner. There is one line here and
+   one button; anything else looks like it came loose. */
+.code--hero .copy {
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
 }
 .code--hero .prompt {
   color: var(--accent);
