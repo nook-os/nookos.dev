@@ -1298,3 +1298,36 @@ details p + p {
     right: 0.6rem;
   }
 }
+
+/* ── desktop download ───────────────────────────────────────────────────
+   The promoted button plus a note about what it gets you. Detection can be
+   wrong, so the full list below stays available rather than hidden. */
+.dl {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0.5rem;
+}
+.dl__note {
+  font-size: 0.82rem;
+  color: var(--fg-faint);
+}
+.dl__all {
+  margin: 0.4rem 0 0.9rem;
+  font-size: 0.88rem;
+}
+.dl__all summary {
+  cursor: pointer;
+  color: var(--fg-dim);
+  padding: 0.2rem 0;
+}
+.dl__all summary:hover {
+  color: var(--accent);
+}
+.dl__list {
+  margin: 0.6rem 0 0.4rem;
+  padding-left: 1.1rem;
+  line-height: 1.8;
+  color: var(--fg-dim);
+}

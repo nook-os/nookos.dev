@@ -359,12 +359,34 @@ crimson  linux     online  hermes,bash
 
       <li class="step">
         <div class="step__head"><h3>Optional: the desktop app</h3></div>
-        <p>The same UI in a native window instead of a browser tab. It talks to your control plane like any other client — there is nothing extra to install on the server, and you can skip it entirely.</p>
+        <p>The same UI in a native window instead of a browser tab — it is the identical build, wrapped in a window. It talks to your control plane like any other client, so there is nothing extra to install on the server and you can skip it entirely.</p>
+
+        <!-- Filled in by main.js from the platform the visitor is actually on;
+             the full list stays visible below, because guessing wrong and
+             hiding the alternatives is worse than not guessing. -->
+        <div class="dl" id="desktopDownload" hidden>
+          <a class="btn btn--primary dl__primary" id="dlPrimary" href="https://github.com/nook-os/nook-os/releases/latest">Download</a>
+          <span class="dl__note" id="dlNote"></span>
+        </div>
+
+        <details class="dl__all">
+          <summary>All platforms</summary>
+          <ul class="dl__list">
+            <li><b>macOS</b> — <code>NookOS_&lt;version&gt;_aarch64.dmg</code> (Apple silicon), <code>_x64.dmg</code> (Intel)</li>
+            <li><b>Linux</b> — <code>.AppImage</code> (any distribution), <code>.deb</code> (Debian, Ubuntu)</li>
+            <li><b>Windows</b> — <code>.msi</code></li>
+          </ul>
+          <p class="fineprint">Every file is on the <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a>, beside the <code>nook</code> CLI binaries and their checksums.</p>
+        </details>
+
         <p class="fineprint">
-          <a href="https://github.com/nook-os/nook-os/releases/latest">Download from the latest release</a>
-          — <code>.dmg</code> for macOS (Intel and Apple silicon),
-          <code>.AppImage</code> and <code>.deb</code> for Linux,
-          <code>.msi</code> for Windows.
+          <b>The bundles are not code-signed yet.</b> macOS will say the app is
+          from an unidentified developer — right-click the app and choose
+          <b>Open</b> the first time, or run
+          <code>xattr -d com.apple.quarantine /Applications/NookOS.app</code>.
+          Windows SmartScreen will want <b>More info → Run anyway</b>. Signing
+          needs a paid certificate from Apple and a CA respectively; until then,
+          the browser version needs none of this.
         </p>
       </li>
 
