@@ -1331,3 +1331,98 @@ details p + p {
   line-height: 1.8;
   color: var(--fg-dim);
 }
+
+/* ── desktop apps, in the hero ──────────────────────────────────────────
+   Directly under the install command, because the server and the client are
+   the two things someone arrives wanting. Three equal cards rather than one
+   promoted guess: the detection below only adds emphasis, so a wrong guess
+   costs nothing and JS being off costs nothing either. */
+.apps {
+  margin: 0 0 1.5rem;
+  max-width: 44rem;
+}
+.apps__label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 0.55rem;
+}
+.apps__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-panel);
+  text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+.app:hover {
+  border-color: var(--accent);
+  background: var(--bg-raised);
+  transform: translateY(-1px);
+}
+.app__glyph {
+  width: 17px;
+  height: 17px;
+  display: block;
+  color: var(--fg-dim);
+  margin-bottom: 0.35rem;
+}
+.app:hover .app__glyph {
+  color: var(--accent);
+}
+.app__name {
+  font-size: 0.92rem;
+  color: var(--fg-bright);
+}
+.app__meta {
+  font-size: 0.7rem;
+  color: var(--fg-faint);
+}
+
+/* The platform you are on, once JS has decided. */
+.app[data-current="true"] {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+}
+.app[data-current="true"] .app__glyph {
+  color: var(--accent);
+}
+
+.apps__note {
+  margin: 0.7rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--fg-faint);
+}
+.apps__note a {
+  color: var(--fg-dim);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.apps__note a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .apps__row {
+    grid-template-columns: 1fr;
+  }
+  .app {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .app__meta {
+    margin-left: auto;
+  }
+}

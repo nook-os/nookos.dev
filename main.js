@@ -438,52 +438,28 @@
 
   runBoot();
 
-  /* ── desktop download ───────────────────────────────────────────────
-     Offer the file for the platform the visitor is on. Detection is a guess —
-     user agents lie, and Apple silicon in particular is not reliably
-     distinguishable from Intel in a browser — so the guess only ever changes
-     which link is *promoted*. The full list stays on the page, and the button
-     falls back to the releases index when we cannot tell. */
-  (function desktopDownload() {
-    const box = document.getElementById("desktopDownload");
-    const link = document.getElementById("dlPrimary");
-    const note = document.getElementById("dlNote");
-    if (!box || !link || !note) return;
+  /* ── desktop apps ───────────────────────────────────────────────────
+     All three are always shown and always work; this only marks the one you
+     are on. Detection is advisory, so being wrong costs a highlight rather
+     than a download, and with JS off the cards behave identically. */
+  (function markCurrentPlatform() {
+    const row = document.getElementById("appsRow");
+    if (!row) return;
 
-    const RELEASES = "https://github.com/nook-os/nook-os/releases/latest";
     const ua = navigator.userAgent;
-    const platform = navigator.platform || "";
+    const p = navigator.platform || "";
+    let os = null;
+    if (/Mac|iPhone|iPad/.test(ua) || /Mac/.test(p)) os = "mac";
+    else if (/Win/.test(ua) || /Win/.test(p)) os = "win";
+    // Android reports Linux and is not a desktop target.
+    else if ((/Linux|X11/.test(ua) || /Linux/.test(p)) && !/Android/.test(ua)) os = "linux";
+    if (!os) return;
 
-    let label = null;
-    let detail = "";
-
-    if (/Mac|iPhone|iPad/.test(ua) || /Mac/.test(platform)) {
-      // A browser cannot see the CPU, and Safari reports Apple silicon Macs
-      // as Intel on purpose. So this does not try to tell them apart: it names
-      // both and lets the person pick, which is one decision rather than a
-      // wrong download.
-      label = "Download for macOS";
-      detail = "Apple silicon and Intel builds";
-    } else if (/Win/.test(ua) || /Win/.test(platform)) {
-      label = "Download for Windows";
-      detail = ".msi installer";
-    } else if (/Linux|X11/.test(ua) || /Linux/.test(platform)) {
-      // Android reports Linux; it is not a desktop target.
-      if (!/Android/.test(ua)) {
-        label = "Download for Linux";
-        detail = ".AppImage and .deb";
-      }
-    }
-
-    if (!label) return; // Unknown platform: leave the section as the list.
-
-    link.textContent = label;
-    // Always the release page rather than a versioned asset URL: a hard-coded
-    // filename goes stale the moment a version ships, and a 404 from the
-    // download button is worse than one extra click.
-    link.href = RELEASES;
-    note.textContent = detail;
-    box.hidden = false;
+    const card = row.querySelector(`[data-os="${os}"]`);
+    if (!card) return;
+    card.dataset.current = "true";
+    // Move it first so the one you want is where the eye lands.
+    row.prepend(card);
   })();
 
 })();

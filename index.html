@@ -83,6 +83,35 @@
       before you pipe it to a shell — it is 200 lines and you should.
     </p>
 
+    <!-- The desktop client, directly under the command that installs the
+         server. These are the two things someone arrives wanting; making them
+         hunt for the second one was the mistake. -->
+    <div class="apps">
+      <span class="apps__label">Desktop app</span>
+      <div class="apps__row" id="appsRow">
+        <a class="app" data-os="mac" href="https://github.com/nook-os/nook-os/releases/latest">
+          <svg class="app__glyph" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16.36 1.43c0 1.14-.47 2.24-1.24 3.05-.83.87-2.17 1.55-3.28 1.46-.13-1.1.42-2.27 1.17-3.03.84-.86 2.3-1.5 3.35-1.48zM20.5 17.1c-.55 1.27-.82 1.84-1.53 2.96-.99 1.56-2.39 3.5-4.12 3.51-1.54.02-1.93-1-4.02-.99-2.09.01-2.52 1.01-4.06.99-1.73-.02-3.05-1.77-4.04-3.33C-.04 15.88-.33 10.76 1.38 8.04 2.59 6.11 4.51 4.97 6.31 4.97c1.83 0 2.98 1.01 4.5 1.01 1.47 0 2.37-1.01 4.49-1.01 1.6 0 3.3.87 4.51 2.38-3.97 2.18-3.33 7.85.69 9.75z"/></svg>
+          <span class="app__name">macOS</span>
+          <span class="app__meta">Apple silicon · Intel</span>
+        </a>
+        <a class="app" data-os="win" href="https://github.com/nook-os/nook-os/releases/latest">
+          <svg class="app__glyph" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M0 3.45 9.75 2.1v9.45H0zM10.95 1.95 24 0v11.4H10.95zM0 12.75h9.75v9.45L0 20.85zM10.95 12.75H24V24l-13.05-1.8z"/></svg>
+          <span class="app__name">Windows</span>
+          <span class="app__meta">.msi · setup.exe</span>
+        </a>
+        <a class="app" data-os="linux" href="https://github.com/nook-os/nook-os/releases/latest">
+          <svg class="app__glyph" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><ellipse cx="12" cy="14.5" rx="6" ry="7.5"/><circle cx="12" cy="6" r="4.4"/><ellipse cx="8.4" cy="22" rx="2.6" ry="1.4"/><ellipse cx="15.6" cy="22" rx="2.6" ry="1.4"/><circle cx="10.4" cy="5.6" r="1.15" fill="var(--bg-panel)"/><circle cx="13.6" cy="5.6" r="1.15" fill="var(--bg-panel)"/><path d="M12 7.2c1 0 1.8.7 1.8 1.4S13 9.9 12 9.9s-1.8-.6-1.8-1.3S11 7.2 12 7.2z" fill="var(--accent)"/></svg>
+          <span class="app__name">Linux</span>
+          <span class="app__meta">.AppImage · .deb · .rpm</span>
+        </a>
+      </div>
+      <p class="apps__note">
+        Optional — the same UI runs in any browser at your control plane's
+        address. <a href="#install">Unsigned for now</a>, so macOS and Windows
+        will each want one click to confirm.
+      </p>
+    </div>
+
     <div class="cta-row">
       <a class="btn btn--primary" href="#install">Install guide</a>
       <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
@@ -361,23 +390,12 @@ crimson  linux     online  hermes,bash
         <div class="step__head"><h3>Optional: the desktop app</h3></div>
         <p>The same UI in a native window instead of a browser tab — it is the identical build, wrapped in a window. It talks to your control plane like any other client, so there is nothing extra to install on the server and you can skip it entirely.</p>
 
-        <!-- Filled in by main.js from the platform the visitor is actually on;
-             the full list stays visible below, because guessing wrong and
-             hiding the alternatives is worse than not guessing. -->
-        <div class="dl" id="desktopDownload" hidden>
-          <a class="btn btn--primary dl__primary" id="dlPrimary" href="https://github.com/nook-os/nook-os/releases/latest">Download</a>
-          <span class="dl__note" id="dlNote"></span>
-        </div>
-
-        <details class="dl__all">
-          <summary>All platforms</summary>
-          <ul class="dl__list">
-            <li><b>macOS</b> — <code>NookOS_&lt;version&gt;_aarch64.dmg</code> (Apple silicon), <code>_x64.dmg</code> (Intel)</li>
-            <li><b>Linux</b> — <code>.AppImage</code> (any distribution), <code>.deb</code> (Debian, Ubuntu)</li>
-            <li><b>Windows</b> — <code>.msi</code></li>
-          </ul>
-          <p class="fineprint">Every file is on the <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a>, beside the <code>nook</code> CLI binaries and their checksums.</p>
-        </details>
+        <p class="fineprint">
+          Download links are <a href="#top">at the top of this page</a>, and
+          every file sits on the
+          <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a>
+          beside the <code>nook</code> CLI binaries and their checksums.
+        </p>
 
         <p class="fineprint">
           <b>The bundles are not code-signed yet.</b> macOS will say the app is
