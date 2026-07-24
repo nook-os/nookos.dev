@@ -456,25 +456,6 @@
     block.appendChild(btn);
   });
 
-  /* ── reveal on scroll ───────────────────────────────────────────── */
-  const revealables = document.querySelectorAll(".reveal");
-
-  if (reduced || !("IntersectionObserver" in window)) {
-    revealables.forEach((el) => el.classList.add("is-in"));
-  } else {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-in");
-          io.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.05 }
-    );
-    revealables.forEach((el) => io.observe(el));
-  }
-
   /* ── footer year ────────────────────────────────────────────────── */
   const year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());

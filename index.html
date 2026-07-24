@@ -147,12 +147,12 @@
 </section>
 
 <!-- ── demo ─────────────────────────────────────────────────────────── -->
-<section class="section section--demo" id="demo">
-  <div class="wrap reveal">
+<section class="section section--alt section--demo" id="demo">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">Try it</p>
       <h2>A shell that is not on this computer.</h2>
-      <p class="section__intro">Simulated, in your browser — but the commands are the real ones. The boot readout is what <code>nook</code> prints when it comes up.</p>
+      <p class="section__intro">Simulated, in your browser — but the commands are the real ones.</p>
     </div>
 
     <pre class="boot" id="boot" aria-hidden="true"></pre>
@@ -199,25 +199,22 @@
 
 <!-- ── proof ────────────────────────────────────────────────────────── -->
 <section class="section" id="proof">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">Not a mockup</p>
       <h2>This is already how the work gets done.</h2>
     </div>
     <div class="callout">
       <p>
-        An agent running on one machine started a Claude Code session on a second
-        machine, sent it prompts, read its answers, and drove the work to
-        completion — using nothing but <code>nook start</code>,
-        <code>nook send</code>, <code>nook read</code> and <code>nook exec</code>.
-        No ssh session was opened. No port was forwarded. No hostname was typed.
+        An agent on one machine started a Claude Code session on a second,
+        sent it prompts, read its answers, and shipped the work — no ssh, no
+        forwarded port, no wrapper library. NookOS ships that ability as a
+        skill any of your agents can install.
       </p>
-      <p>
-        NookOS ships that capability as an agent skill, so any agent you run can
-        do the same thing: <code>./skills/install.sh --host &lt;box&gt;</code>.
-        The protocol is small enough to explain in one line — <b>send types,
-        read looks, exec does both and waits</b> — which is exactly why an agent
-        can pick it up without a wrapper library.
+      <p class="protocol" aria-label="The whole protocol in one line">
+        <code>send</code> types <span aria-hidden="true">·</span>
+        <code>read</code> looks <span aria-hidden="true">·</span>
+        <code>exec</code> does both and waits
       </p>
     </div>
   </div>
@@ -225,21 +222,20 @@
 
 <!-- ── how ──────────────────────────────────────────────────────────── -->
 <section class="section" id="how">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">How it works</p>
       <h2>Four commands is the whole protocol.</h2>
       <p class="section__intro">
-        Name a workspace and a runtime; the control plane finds a machine that
-        has that repo and starts the session there. You never address the
-        machine directly.
+        Name a repo and a runtime. NookOS finds a machine that has it and
+        starts the session there.
       </p>
     </div>
 
     <ol class="steps">
       <li class="step">
         <div class="step__head"><h3>Look at the fleet</h3></div>
-        <p>Machines, repos and running sessions, kubectl-style. Every node reports its own capabilities, including which runtimes it actually has installed.</p>
+        <p>Machines, repos and running sessions, kubectl-style — including which runtimes each node actually has.</p>
         <div class="code">
           <pre><span class="prompt">$ </span>nook get nodes
 NAME     PLATFORM  STATUS  RUNTIMES
@@ -262,7 +258,7 @@ crimson  linux     online  hermes,bash
 
       <li class="step">
         <div class="step__head"><h3>Talk to it</h3></div>
-        <p><code>exec</code> polls until the screen stops changing for two consecutive reads — the only honest way to know an agent has finished, because thinking time is unpredictable and a fixed <code>sleep</code> either truncates the answer or wastes minutes.</p>
+        <p><code>exec</code> waits until the screen stops changing — the only honest way to know an agent is done.</p>
         <div class="code">
           <pre><span class="prompt">$ </span>nook exec refactor-auth 'move the token refresh into middleware' --timeout 600
 <span class="prompt">$ </span>nook send refactor-auth 'yes'      <span class="comment"># answer a permission prompt</span>
@@ -272,7 +268,7 @@ crimson  linux     online  hermes,bash
 
       <li class="step">
         <div class="step__head"><h3>Fan out</h3></div>
-        <p>Sessions are independent and persistent. Start work on three repos across three machines, go and do something else, and collect the results when you get back.</p>
+        <p>Sessions are independent and persistent. Start three, walk away, collect the results later.</p>
         <div class="code">
           <pre><span class="prompt">$ </span>nook start acme/checkout-api    --node azul    --runtime claude --name api
 <span class="prompt">$ </span>nook start widgets/web-dashboard --node crimson --runtime claude --name web
@@ -285,55 +281,53 @@ crimson  linux     online  hermes,bash
 </section>
 
 <!-- ── what ─────────────────────────────────────────────────────────── -->
-<section class="section" id="what">
-  <div class="wrap reveal">
+<section class="section section--alt" id="what">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">What it is</p>
       <h2>A control plane for machines, workspaces and sessions.</h2>
       <p class="section__intro">
-        It doesn't replace your editor, your Git, or your AI — it coordinates
-        everything around them, in one place you own. Claude writes the code;
-        Nook decides where it runs, remembers that it ran, and is still holding
-        the session when you come back.
+        Claude writes the code. Nook decides where it runs, remembers that it
+        ran, and is still holding the session when you come back.
       </p>
     </div>
 
     <div class="grid grid--3">
       <article class="panel">
         <h3>Nodes</h3>
-        <p>Machines join with a token and connect <b>outbound</b> over WebSocket — no inbound SSH, no public ports. Each reports CPU, memory, load, session capacity and installed runtimes, live.</p>
+        <p>Machines join with a token and connect <b>outbound</b> — no inbound SSH, no public ports.</p>
       </article>
       <article class="panel">
         <h3>Workspaces</h3>
-        <p>A workspace is a repo, not a machine. The same workspace can exist on many nodes; a repository's identity is its git remote, so two checkouts of the same thing are the same thing.</p>
+        <p>A workspace is a repo, not a machine. The same repo on three nodes is one workspace.</p>
       </article>
       <article class="panel">
         <h3>Sessions</h3>
-        <p>tmux-backed and persistent, streamed to xterm.js in the browser. They survive page refreshes, network drops, your process exiting and the node restarting.</p>
+        <p>tmux-backed and persistent. They survive refreshes, network drops and restarts.</p>
       </article>
       <article class="panel">
         <h3>Runtimes</h3>
-        <p>A session runs whatever you choose — <code>bash</code>, <code>zsh</code>, <code>claude</code>, <code>hermes</code>, <code>codex</code>. Ask a node for a runtime it doesn't have and it fails immediately, not mysteriously.</p>
+        <p><code>bash</code>, <code>zsh</code>, <code>claude</code>, <code>hermes</code>, <code>codex</code> — a missing runtime fails fast, not mysteriously.</p>
       </article>
       <article class="panel">
         <h3>Board</h3>
-        <p>Kanban that actually dispatches work. Triage → Todo → In Progress → Done, where <i>start work</i> creates a worktree and a session, and <i>prune</i> tears the worktree back down.</p>
+        <p>Kanban that dispatches: a card becomes a worktree, a machine and a session.</p>
       </article>
       <article class="panel">
         <h3>Activity</h3>
-        <p>Everything produces an event, streamed live over WebSocket. Plus rolling per-workspace notes, so the context of a piece of work lives next to the work.</p>
+        <p>Every action is a live event, and per-workspace notes keep context next to the work.</p>
       </article>
       <article class="panel">
         <h3>MCP surface</h3>
-        <p>A streamable-HTTP MCP server at <code>/mcp</code> (Bearer <code>MCP_TOKEN</code>) exposes the whole system: <code>list_workspaces</code>, <code>list_nodes</code>, <code>list_sessions</code>, <code>start_session</code>, <code>send_to_session</code>, <code>get_activity</code>, <code>get_notes</code>, <code>append_note</code>, <code>create_task</code>.</p>
+        <p>An MCP server at <code>/mcp</code> exposes the whole system to any agent that speaks tools.</p>
       </article>
       <article class="panel">
         <h3>Identity</h3>
-        <p>Generic OIDC against any standards-compliant IdP, authorization code + PKCE, multi-tenant from the schema up. Access tokens are issued and revoked in the UI.</p>
+        <p>Generic OIDC with PKCE, multi-tenant from the schema up. Tokens issued and revoked in the UI.</p>
       </article>
       <article class="panel">
         <h3>Desktop</h3>
-        <p>A Tauri shell wraps the same application, so the fleet is a native window when you want one and a browser tab when you don't.</p>
+        <p>The same app in a native window, talking to your control plane like any other client.</p>
       </article>
     </div>
   </div>
@@ -341,7 +335,7 @@ crimson  linux     online  hermes,bash
 
 <!-- ── screenshots ──────────────────────────────────────────────────── -->
 <section class="section" id="screens">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">The application</p>
       <h2>Mission control, in amber.</h2>
@@ -397,17 +391,14 @@ crimson  linux     online  hermes,bash
 </section>
 
 <!-- ── install ──────────────────────────────────────────────────────── -->
-<section class="section" id="install">
-  <div class="wrap reveal">
+<section class="section section--alt" id="install">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">Install</p>
       <h2>Run the control plane wherever you like.</h2>
       <p class="section__intro">
-        The control plane and web app ship as public images —
-        <code>ghcr.io/nook-os/nook-control</code> and <code>nook-web</code> — plus a
-        Helm chart. <code>nook server init</code> scaffolds any of the first four:
-        it generates the secrets, writes the deployment files, and brings it up.
-        Kubernetes installs straight from the chart.
+        Public images, a Helm chart, and <code>nook server init</code> to write
+        the deployment files for you. Pick how you want to run it.
       </p>
     </div>
 
@@ -634,21 +625,21 @@ agent:
     <ol class="steps">
       <li class="step">
         <div class="step__head"><h3>Add a machine</h3></div>
-        <p>In the UI: <b>Nodes → add node</b>, then run this on the machine — the token and certificate fingerprint are filled in for you. It generates its own keypair, sends only a signing request, and connects <b>outbound</b>; nothing needs to be reachable from the internet.</p>
+        <p><b>Nodes → add node</b> hands you this with the token and fingerprint filled in. The machine connects <b>outbound</b> — nothing is exposed to the internet.</p>
         <div class="code">
           <pre><span class="prompt">$ </span>curl -fsSL https://&lt;your-control-plane&gt;/install.sh | sh -s -- --token nook_join_...</pre>
         </div>
       </li>
       <li class="step">
         <div class="step__head"><h3>Teach your agents</h3></div>
-        <p>NookOS ships as an agent skill. <code>nook skills install</code> writes it into every agent installation on the machine — Claude Code, Hermes and its profiles — so they can start and drive sessions across the fleet themselves.</p>
+        <p>Installs the NookOS skill into every agent on the machine — Claude Code, Hermes — so they can drive the fleet too.</p>
         <div class="code">
           <pre><span class="prompt">$ </span>nook skills install</pre>
         </div>
       </li>
       <li class="step">
         <div class="step__head"><h3>Desktop app (optional)</h3></div>
-        <p>The same UI in a native window — the identical build, wrapped in a window, talking to your control plane like any other client. Nothing extra on the server; skip it entirely if you prefer a browser tab. <a href="#top">Downloads are at the top</a>, and on the <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a> beside the <code>nook</code> binaries and checksums.</p>
+        <p>The same UI in a native window, nothing extra on the server. <a href="#top">Downloads are at the top</a> and on the <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a>.</p>
       </li>
     </ol>
   </div>
@@ -656,7 +647,7 @@ agent:
 
 <!-- ── security ─────────────────────────────────────────────────────── -->
 <section class="section" id="security">
-  <div class="wrap reveal">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">Posture</p>
       <h2>Self-hosted means self-hosted.</h2>
@@ -681,8 +672,8 @@ agent:
 </section>
 
 <!-- ── faq ──────────────────────────────────────────────────────────── -->
-<section class="section" id="faq">
-  <div class="wrap reveal">
+<section class="section section--alt" id="faq">
+  <div class="wrap">
     <div class="section__head">
       <p class="eyebrow">Questions</p>
       <h2>The ones people actually ask.</h2>
@@ -724,7 +715,7 @@ agent:
 
 <!-- ── finale ───────────────────────────────────────────────────────── -->
 <section class="section finale" id="start">
-  <div class="wrap reveal">
+  <div class="wrap">
     <h2>Your machines, one control plane.</h2>
     <p class="lede">
       Free, open source, Apache-2.0, self-hosted, no telemetry. Clone it and have

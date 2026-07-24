@@ -206,8 +206,18 @@ samp {
 }
 
 .section {
-  padding-block: clamp(56px, 9vw, 104px);
+  padding-block: clamp(48px, 7vw, 88px);
   border-top: 1px solid var(--border);
+}
+
+/* Every other section sits on a faintly raised band, so the page reads as
+   alternating surfaces instead of one endless column. */
+.section--alt {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.018),
+    rgba(255, 255, 255, 0.006)
+  );
 }
 
 .section--flush {
@@ -490,28 +500,39 @@ th,
 }
 
 /* Credibility line, in the machine voice, tick-separated like a status row. */
+/* Editor-style pills (the product's status chips), not floating bullets. */
 .hero__facts {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 18px;
+  gap: 8px;
   margin-top: 26px;
-  font-family: var(--mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.04em;
-  color: var(--fg-faint);
-  text-transform: uppercase;
 }
 
 .hero__facts li {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 18px;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  white-space: nowrap;
 }
 
 .hero__facts li::before {
-  content: "▹";
-  color: var(--accent);
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--glow);
+  flex: 0 0 auto;
 }
 
 /* ── the fleet readout (hero signature) ─────────────────────────────── */
@@ -1044,6 +1065,13 @@ th,
   grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
 }
 
+/* Nine cards read as a 3×3 square, never 4+4+1 with one stranded card. */
+@media (min-width: 1024px) {
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .grid--2 {
   grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
 }
@@ -1092,7 +1120,7 @@ th,
 
 .panel p {
   color: var(--fg-dim);
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.55;
 }
 
@@ -1124,16 +1152,20 @@ th,
 
 .step__head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
 }
 
 .step__head::before {
   content: counter(step, decimal-leading-zero);
+  font-family: var(--mono);
   color: var(--accent);
   font-weight: 700;
-  font-size: 13px;
-  text-shadow: var(--glow);
+  font-size: 12px;
+  line-height: 1;
+  padding: 4px 7px;
+  border: 1px solid rgba(245, 179, 1, 0.35);
+  border-radius: 6px;
   flex: 0 0 auto;
 }
 
@@ -1209,6 +1241,26 @@ th,
 
 .callout p + p {
   margin-top: 12px;
+}
+
+/* The whole protocol on one mono line — the page's shortest pitch. */
+.protocol {
+  font-family: var(--mono);
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(245, 179, 1, 0.3);
+}
+
+.protocol code {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.protocol span {
+  color: var(--fg-faint);
+  padding-inline: 6px;
 }
 
 /* ── table ──────────────────────────────────────────────────────────── */
@@ -1361,26 +1413,6 @@ details p + p {
 @media (max-width: 640px) {
   .footer__legal {
     margin-left: 0;
-  }
-}
-
-/* ── reveal ─────────────────────────────────────────────────────────── */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.reveal.is-in {
-  opacity: 1;
-  transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
   }
 }
 
