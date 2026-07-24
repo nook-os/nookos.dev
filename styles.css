@@ -1130,6 +1130,74 @@ th,
   font-size: 0.86em;
 }
 
+/* ── the four verbs ─────────────────────────────────────────────────────
+   The protocol section IS its headline: four commands, four cards, 2×2.
+   Each card is one verb, one sentence, one or two lines of the real CLI. */
+
+.verbs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+@media (min-width: 900px) {
+  .verbs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.verb {
+  min-width: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+
+.verb:hover {
+  border-color: var(--border-bright);
+  background: var(--bg-raised);
+}
+
+/* The title is the command itself — machine voice, amber verb. */
+.verb h3 {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--accent);
+  text-shadow: var(--glow);
+}
+
+.verb__nook {
+  color: var(--fg-faint);
+  font-weight: 400;
+}
+
+.verb p {
+  color: var(--fg-dim);
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.verb .code {
+  margin-top: 14px;
+}
+
+.code .ok {
+  color: var(--ok);
+}
+
+.code .out {
+  color: var(--fg-dim);
+}
+
+.code pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-bright) transparent;
+}
+
 /* ── numbered steps ─────────────────────────────────────────────────── */
 
 .steps {

@@ -232,51 +232,43 @@
       </p>
     </div>
 
-    <ol class="steps">
-      <li class="step">
-        <div class="step__head"><h3>Look at the fleet</h3></div>
-        <p>Machines, repos and running sessions, kubectl-style — including which runtimes each node actually has.</p>
-        <div class="code">
-          <pre><span class="prompt">$ </span>nook get nodes
-NAME     PLATFORM  STATUS  RUNTIMES
-azul     linux     online  claude,codex,bash
-crimson  linux     online  hermes,bash
-
-<span class="prompt">$ </span>nook get workspaces
-<span class="prompt">$ </span>nook get sessions</pre>
-        </div>
-      </li>
-
-      <li class="step">
-        <div class="step__head"><h3>Start a session anywhere</h3></div>
-        <p>Pick the runtime you want — <code>claude</code>, <code>codex</code>, <code>hermes</code>, <code>bash</code>, <code>zsh</code>. Drop <code>--node</code> and the scheduler picks an online machine that has the repo.</p>
+    <div class="verbs">
+      <article class="verb">
+        <h3><span class="verb__nook">nook</span> start</h3>
+        <p>Open a session on any machine in the fleet.</p>
         <div class="code">
           <pre><span class="prompt">$ </span>nook start acme/checkout-api --runtime claude
-<span class="prompt">$ </span>nook start acme/checkout-api --node azul --runtime claude --name refactor-auth</pre>
+<span class="ok">✓</span> api — claude on azul</pre>
         </div>
-      </li>
+      </article>
 
-      <li class="step">
-        <div class="step__head"><h3>Talk to it</h3></div>
-        <p><code>exec</code> waits until the screen stops changing — the only honest way to know an agent is done.</p>
+      <article class="verb">
+        <h3><span class="verb__nook">nook</span> send</h3>
+        <p>Type into it, without waiting around.</p>
         <div class="code">
-          <pre><span class="prompt">$ </span>nook exec refactor-auth 'move the token refresh into middleware' --timeout 600
-<span class="prompt">$ </span>nook send refactor-auth 'yes'      <span class="comment"># answer a permission prompt</span>
-<span class="prompt">$ </span>nook read refactor-auth --lines 400</pre>
+          <pre><span class="prompt">$ </span>nook send api 'run the tests'</pre>
         </div>
-      </li>
+      </article>
 
-      <li class="step">
-        <div class="step__head"><h3>Fan out</h3></div>
-        <p>Sessions are independent and persistent. Start three, walk away, collect the results later.</p>
+      <article class="verb">
+        <h3><span class="verb__nook">nook</span> read</h3>
+        <p>Look at its screen — now, or hours later.</p>
         <div class="code">
-          <pre><span class="prompt">$ </span>nook start acme/checkout-api    --node azul    --runtime claude --name api
-<span class="prompt">$ </span>nook start widgets/web-dashboard --node crimson --runtime claude --name web
-<span class="prompt">$ </span>nook send api 'upgrade sqlx and fix the fallout'
-<span class="prompt">$ </span>nook send web 'migrate settings to the new form component'</pre>
+          <pre><span class="prompt">$ </span>nook read api --lines 200</pre>
         </div>
-      </li>
-    </ol>
+      </article>
+
+      <article class="verb">
+        <h3><span class="verb__nook">nook</span> exec</h3>
+        <p>Send and wait for the answer. It knows when the agent is done.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook exec api 'what broke in CI?'
+<span class="ok">●</span> <span class="out">the flaky retry test — want me to fix it?</span></pre>
+        </div>
+      </article>
+    </div>
+
+    <p class="fineprint">Want to look around first? <code>nook get nodes | workspaces | sessions</code> — kubectl-style, straight from the control plane.</p>
   </div>
 </section>
 
