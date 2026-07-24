@@ -49,33 +49,69 @@
 <!-- ── hero ─────────────────────────────────────────────────────────── -->
 <section class="hero" id="top">
   <div class="wrap hero__inner">
-    <div class="badges">
-      <span class="badge badge--accent">Apache-2.0</span>
-      <span class="badge">Self-hosted</span>
-      <span class="badge">No telemetry</span>
-      <span class="badge">Rust + React</span>
+    <div class="hero__lead">
+      <p class="eyebrow">Self-hosted control plane</p>
+
+      <h1 class="hero__title">Run coding agents on every machine you own.</h1>
+
+      <p class="hero__sub">
+        NookOS starts Claude Code, Codex or a shell on any node in your fleet
+        and types into it for you — <strong>no ssh, no tmux, no ports</strong>.
+        Sessions live on the machine, so closing your laptop never stops the
+        work.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#install">Install NookOS</a>
+        <a class="btn" href="#demo">Try the shell</a>
+        <a class="btn btn--ghost" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
+      </div>
+
+      <ul class="hero__facts">
+        <li>Apache-2.0</li>
+        <li>Self-hosted</li>
+        <li>No telemetry</li>
+        <li>Rust + React</li>
+      </ul>
     </div>
 
-    <h1 class="hero__cmd">
-      <span class="hero__line"><span class="hero__dollar" aria-hidden="true">$</span> nook start <span class="tok-arg">&lt;repo&gt;</span></span>
-      <span class="hero__line hero__line--cont"><span class="tok-flag">--node</span> azul <span class="tok-flag">--runtime</span> claude<span class="caret caret--h1" aria-hidden="true"></span></span>
-    </h1>
+    <!-- The signature: the machine voice, beside the human one. A static
+         readout of a small fleet — the same shape the product shows — so the
+         hero composition itself says "one command, many machines". -->
+    <aside class="fleet" aria-label="Example fleet status">
+      <div class="fleet__bar">
+        <span class="term__dot"></span>
+        <span class="fleet__title">nook · your fleet</span>
+        <span class="fleet__meta">2 online</span>
+      </div>
+      <div class="fleet__body">
+        <p class="fleet__cmd"><span class="prompt">$</span> nook start <span class="tok-arg">acme/checkout-api</span> <span class="tok-flag">--runtime</span> claude</p>
+        <div class="fleet__nodes">
+          <div class="fleet__node">
+            <span class="fleet__dot fleet__dot--on"></span>
+            <span class="fleet__name">azul</span>
+            <span class="fleet__rt">claude · codex · bash</span>
+            <span class="fleet__badge fleet__badge--run">running</span>
+          </div>
+          <div class="fleet__node">
+            <span class="fleet__dot fleet__dot--on"></span>
+            <span class="fleet__name">crimson</span>
+            <span class="fleet__rt">hermes · bash</span>
+            <span class="fleet__badge">idle</span>
+          </div>
+          <div class="fleet__node fleet__node--off">
+            <span class="fleet__dot"></span>
+            <span class="fleet__name">slate</span>
+            <span class="fleet__rt">gpu · offline</span>
+            <span class="fleet__badge">—</span>
+          </div>
+        </div>
+        <p class="fleet__foot"><span class="ok">✓</span> session on <b>azul</b> — the machine is an implementation detail.</p>
+      </div>
+    </aside>
 
-    <p class="hero__sub">
-      One command starts Claude Code — or Codex, or a plain shell —
-      <strong>on any machine you own</strong>, and types into it for you.
-      No ssh, no tmux, no hostname, no port to forward. Sessions live on the
-      node, so closing your laptop never stops the work.
-    </p>
-
-    <div class="cta-row">
-      <a class="btn btn--primary" href="#install">Install NookOS</a>
-      <a class="btn" href="#demo">Try the shell</a>
-      <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
-    </div>
-
-    <!-- The desktop client sits right under the hero call to action: the CLI
-         and the native window are the two things people arrive wanting. -->
+    <!-- The desktop client sits under the hero: the CLI and the native window
+         are the two things people arrive wanting. -->
     <div class="apps">
       <span class="apps__label">Desktop app</span>
       <div class="apps__row" id="appsRow">
