@@ -206,7 +206,7 @@ samp {
 }
 
 .section {
-  padding-block: clamp(48px, 7vw, 88px);
+  padding-block: clamp(64px, 9vw, 116px);
   border-top: 1px solid var(--border);
 }
 
@@ -229,7 +229,7 @@ samp {
    rather than a stack of differently-spaced blocks. */
 .section__head {
   max-width: 62ch;
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-7);
 }
 
 /* The head owns the gap to the body; whatever follows starts flush, so every
@@ -1057,7 +1057,7 @@ th,
 
 .grid {
   display: grid;
-  gap: 16px;
+  gap: 20px;
   margin-top: 36px;
 }
 
@@ -1081,7 +1081,8 @@ th,
   background: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 24px 22px;
+  padding: 28px 26px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
   transition: border-color 0.16s ease, transform 0.16s ease,
     box-shadow 0.16s ease, background 0.16s ease;
 }
@@ -1090,7 +1091,8 @@ th,
   border-color: var(--border-bright);
   background: var(--bg-raised);
   transform: translateY(-2px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 /* One thin amber accent per card — a short rule under the title that grows a
@@ -1137,7 +1139,7 @@ th,
 .verbs {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
+  gap: 20px;
 }
 
 @media (min-width: 900px) {
@@ -1151,7 +1153,9 @@ th,
   background: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 22px;
+  padding: 28px;
+  /* Lit from above: the hairline top highlight dark UI cards use for depth. */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
   transition: border-color 0.16s ease, background 0.16s ease;
 }
 
@@ -1163,7 +1167,7 @@ th,
 /* The title is the command itself — machine voice, amber verb. */
 .verb h3 {
   font-family: var(--mono);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0;
   color: var(--accent);
@@ -1178,11 +1182,11 @@ th,
 .verb p {
   color: var(--fg-dim);
   font-size: 15px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .verb .code {
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .code .ok {
@@ -1206,7 +1210,7 @@ th,
   margin-top: 36px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
+  gap: 18px;
 }
 
 .step {
@@ -1215,7 +1219,8 @@ th,
   border: 1px solid var(--border);
   border-left: 2px solid var(--accent);
   border-radius: var(--radius);
-  padding: 20px 22px;
+  padding: 26px 28px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
 .step__head {
@@ -1298,7 +1303,7 @@ th,
     rgba(245, 179, 1, 0.06),
     rgba(245, 179, 1, 0.015)
   );
-  padding: 26px;
+  padding: 30px 32px;
   margin-top: 32px;
 }
 
@@ -1350,7 +1355,7 @@ table {
 th,
 td {
   text-align: left;
-  padding: 12px 16px;
+  padding: 14px 18px;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
 }
@@ -1380,16 +1385,17 @@ td:first-child {
 /* ── faq ────────────────────────────────────────────────────────────── */
 
 .faq {
-  margin-top: 30px;
+  margin-top: 0;
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 details {
   background: var(--bg-panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0 20px;
+  padding: 0 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
 details[open] {
@@ -1398,7 +1404,7 @@ details[open] {
 
 summary {
   cursor: pointer;
-  padding: 16px 0;
+  padding: 18px 0;
   color: var(--fg-bright);
   font-weight: 700;
   font-size: 14.5px;
@@ -1453,7 +1459,7 @@ details p + p {
 
 .footer {
   border-top: 1px solid var(--border);
-  padding-block: 34px 46px;
+  padding-block: 44px 56px;
   color: var(--fg-faint);
   font-size: 13px;
 }
@@ -1629,14 +1635,22 @@ details p + p {
   margin-top: var(--space-6);
 }
 
+/* A segmented control (the editor's own pattern): the five methods sit in a
+   raised bar, and the active one lights its icon amber. On a phone the bar
+   scrolls sideways inside itself. */
 .tabs__list {
   display: flex;
-  gap: 2px;
-  /* Five labels scroll sideways inside their own strip on a phone rather than
-     wrapping raggedly or pushing the page width out. */
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 6px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
   overflow-x: auto;
   scrollbar-width: none;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
 }
 .tabs__list::-webkit-scrollbar {
   display: none;
@@ -1644,32 +1658,55 @@ details p + p {
 
 .tab {
   flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-family: inherit;
   font-size: var(--text-sm);
   font-weight: 700;
   color: var(--fg-dim);
   background: transparent;
-  border: 0;
-  border-bottom: 2px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 9px;
   /* ≥44px tap target. */
   min-height: 44px;
-  padding: 0 var(--space-4);
+  padding: 0 16px;
   cursor: pointer;
   white-space: nowrap;
-  margin-bottom: -1px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease, border-color 0.15s ease,
+    background 0.15s ease;
 }
+
+.tab__icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
 .tab:hover {
-  color: var(--accent);
+  color: var(--fg-bright);
+  background: var(--bg-raised);
 }
+
 .tab[aria-selected="true"] {
+  color: var(--fg-bright);
+  background: var(--bg-raised);
+  border-color: var(--border-bright);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.tab[aria-selected="true"] .tab__icon {
   color: var(--accent);
-  border-bottom-color: var(--accent);
-  text-shadow: var(--glow);
+  filter: drop-shadow(0 0 6px rgba(245, 179, 1, 0.45));
 }
 
 .tabpanel {
-  padding-top: var(--space-5);
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: clamp(20px, 3vw, 32px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 20px 50px rgba(0, 0, 0, 0.35);
 }
 .tabpanel__title {
   margin-bottom: var(--space-3);
@@ -1681,10 +1718,9 @@ details p + p {
   margin-top: 0;
 }
 
-/* No-JS / not-yet-enhanced: panels stack as a labelled list, divided. */
+/* No-JS / not-yet-enhanced: the panels stack as labelled cards. */
 .tabpanel + .tabpanel {
-  margin-top: var(--space-5);
-  border-top: 1px solid var(--border);
+  margin-top: 20px;
 }
 
 /* `.js` present but main.js not run yet: show only the first (default) panel,
@@ -1694,11 +1730,10 @@ details p + p {
   display: none;
 }
 
-/* Enhanced: one panel at a time, no dividers, and the visible title folds
-   away — the selected tab already names the panel (aria-labelledby). */
+/* Enhanced: one panel at a time; the visible title folds away — the selected
+   tab already names the panel (aria-labelledby). */
 .tabs[data-enhanced] .tabpanel {
   margin-top: 0;
-  border-top: 0;
 }
 .tabs[data-enhanced] .tabpanel__title {
   position: absolute;
@@ -1719,7 +1754,7 @@ details p + p {
 
 /* Post-install steps, set off from the tabs above them. */
 .install__next {
-  margin-top: var(--space-7);
-  padding-top: var(--space-5);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
   border-top: 1px solid var(--border);
 }
