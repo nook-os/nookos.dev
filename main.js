@@ -374,6 +374,49 @@
     });
   }
 
+  /* ── tabbed install ─────────────────────────────────────────────── */
+  // APG tabs with automatic activation: roving tabindex, arrows wrap,
+  // Home/End jump. Panels render visible (JS off = every method readable);
+  // enhancing hides the inactive ones and keeps [hidden] in step with the tab.
+  document.querySelectorAll("[data-tabs]").forEach((group) => {
+    const tabs = Array.from(group.querySelectorAll('[role="tab"]'));
+    if (tabs.length < 2) return;
+    const panelFor = (tab) => document.getElementById(tab.getAttribute("aria-controls"));
+
+    const select = (tab, focus) => {
+      tabs.forEach((t) => {
+        const on = t === tab;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = panelFor(t);
+        if (panel) panel.hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+
+    group.dataset.enhanced = "true";
+    // Honour a server-marked selection if present, else the first tab.
+    select(tabs.find((t) => t.getAttribute("aria-selected") === "true") || tabs[0], false);
+
+    group.addEventListener("click", (e) => {
+      const tab = e.target.closest('[role="tab"]');
+      if (tab) select(tab, true);
+    });
+
+    group.addEventListener("keydown", (e) => {
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      let j = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") j = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") j = 0;
+      else if (e.key === "End") j = tabs.length - 1;
+      if (j === null) return;
+      e.preventDefault();
+      select(tabs[j], true);
+    });
+  });
+
   /* ── copy buttons on code blocks ────────────────────────────────── */
   // Prompts are decorative, so they are stripped before the clipboard sees
   // them — pasting "$ nook run" into a shell is a small, avoidable insult.

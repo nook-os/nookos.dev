@@ -15,6 +15,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230e1012'/><text x='16' y='23' font-family='monospace' font-size='20' font-weight='bold' fill='%23f5b301' text-anchor='middle'>n</text></svg>">
 <link rel="stylesheet" href="styles.css">
+<!-- Mark that scripting is on, before first paint, so the tabbed install can
+     collapse to a single panel without flashing all five. With JS off this
+     never runs and every panel stays visible and labelled. -->
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 
@@ -33,7 +37,6 @@
       <a href="#what">What it is</a>
       <a href="#screens">Screenshots</a>
       <a href="#install">Install</a>
-      <a href="#deploy">Deploy</a>
       <a href="#faq">FAQ</a>
       <a href="https://github.com/nook-os/nook-os">GitHub</a>
       <a class="nav__cta" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
@@ -59,33 +62,20 @@
     </h1>
 
     <p class="hero__sub">
-      That starts Claude Code <strong>on a different computer</strong>.
-      <code>nook exec</code> types at it and waits for the answer. No ssh, no tmux,
-      no hostname, no port to forward. Close your laptop and it keeps working.
+      One command starts Claude Code — or Codex, or a plain shell —
+      <strong>on any machine you own</strong>, and types into it for you.
+      No ssh, no tmux, no hostname, no port to forward. Sessions live on the
+      node, so closing your laptop never stops the work.
     </p>
 
-    <!-- The one command the whole site is asking for, in the same terminal
-         chrome as the demo shell so it reads as something you run, not a
-         decorated link. -->
-    <div class="term term--install">
-      <div class="term__bar">
-        <span class="term__dot"></span>
-        <span class="term__title">install</span>
-        <span class="term__meta">linux · macos · intel · apple silicon</span>
-      </div>
-      <div class="code code--hero">
-        <pre><span class="prompt">$ </span>curl -fsSL https://nookos.dev/install.sh | sh</pre>
-      </div>
+    <div class="cta-row">
+      <a class="btn btn--primary" href="#install">Install NookOS</a>
+      <a class="btn" href="#demo">Try the shell</a>
+      <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
     </div>
-    <p class="hero__install-note">
-      Asks a few questions, then sets it up. Nothing to clone, nothing to build.
-      <a href="https://github.com/nook-os/nook-os/blob/main/install/install.sh">Read the script</a>
-      before you pipe it to a shell — it is 200 lines and you should.
-    </p>
 
-    <!-- The desktop client, directly under the command that installs the
-         server. These are the two things someone arrives wanting; making them
-         hunt for the second one was the mistake. -->
+    <!-- The desktop client sits right under the hero call to action: the CLI
+         and the native window are the two things people arrive wanting. -->
     <div class="apps">
       <span class="apps__label">Desktop app</span>
       <div class="apps__row" id="appsRow">
@@ -117,21 +107,17 @@
       </div>
     </div>
 
-    <div class="cta-row">
-      <a class="btn btn--primary" href="#install">Install guide</a>
-      <a class="btn" href="https://github.com/nook-os/nook-os">Source on GitHub</a>
-      <a class="btn" href="mailto:waitlist@nookos.dev?subject=NookOS%20managed%20waitlist">Managed waitlist</a>
-    </div>
-
   </div>
 </section>
 
 <!-- ── demo ─────────────────────────────────────────────────────────── -->
 <section class="section section--demo" id="demo">
   <div class="wrap reveal">
-    <p class="eyebrow">Try it</p>
-    <h2>A shell that is not on this computer.</h2>
-    <p class="section__lede">Simulated, in your browser — but the commands are the real ones. The boot readout is what <code>nook</code> prints when it comes up.</p>
+    <div class="section__head">
+      <p class="eyebrow">Try it</p>
+      <h2>A shell that is not on this computer.</h2>
+      <p class="section__intro">Simulated, in your browser — but the commands are the real ones. The boot readout is what <code>nook</code> prints when it comes up.</p>
+    </div>
 
     <pre class="boot" id="boot" aria-hidden="true"></pre>
 
@@ -178,8 +164,10 @@
 <!-- ── proof ────────────────────────────────────────────────────────── -->
 <section class="section" id="proof">
   <div class="wrap reveal">
-    <p class="eyebrow">Not a mockup</p>
-    <h2>This is already how the work gets done.</h2>
+    <div class="section__head">
+      <p class="eyebrow">Not a mockup</p>
+      <h2>This is already how the work gets done.</h2>
+    </div>
     <div class="callout">
       <p>
         An agent running on one machine started a Claude Code session on a second
@@ -202,13 +190,15 @@
 <!-- ── how ──────────────────────────────────────────────────────────── -->
 <section class="section" id="how">
   <div class="wrap reveal">
-    <p class="eyebrow">How it works</p>
-    <h2>Four commands is the whole protocol.</h2>
-    <p class="lede">
-      You name a workspace and a runtime. The control plane finds a machine that
-      has that repo checked out and starts the session there. You never address
-      the machine directly.
-    </p>
+    <div class="section__head">
+      <p class="eyebrow">How it works</p>
+      <h2>Four commands is the whole protocol.</h2>
+      <p class="section__intro">
+        Name a workspace and a runtime; the control plane finds a machine that
+        has that repo and starts the session there. You never address the
+        machine directly.
+      </p>
+    </div>
 
     <ol class="steps">
       <li class="step">
@@ -261,15 +251,16 @@ crimson  linux     online  hermes,bash
 <!-- ── what ─────────────────────────────────────────────────────────── -->
 <section class="section" id="what">
   <div class="wrap reveal">
-    <p class="eyebrow">What it is</p>
-    <h2>A control plane for machines, workspaces and sessions.</h2>
-    <p class="lede">
-      NookOS does not replace your editor, your Git, or your AI. It coordinates
-      everything around them, and it keeps the coordination in one place you own.
-      Claude writes the code. Nook decides where it runs, remembers that it ran,
-      and is still holding the session when you come back — an operating system
-      for the work rather than for the machine.
-    </p>
+    <div class="section__head">
+      <p class="eyebrow">What it is</p>
+      <h2>A control plane for machines, workspaces and sessions.</h2>
+      <p class="section__intro">
+        It doesn't replace your editor, your Git, or your AI — it coordinates
+        everything around them, in one place you own. Claude writes the code;
+        Nook decides where it runs, remembers that it ran, and is still holding
+        the session when you come back.
+      </p>
+    </div>
 
     <div class="grid grid--3">
       <article class="panel">
@@ -298,7 +289,7 @@ crimson  linux     online  hermes,bash
       </article>
       <article class="panel">
         <h3>MCP surface</h3>
-        <p>An MCP server at <code>/mcp</code> exposes the whole system to any MCP client: list workspaces, nodes and sessions, start a session, send to it, read activity, create a task.</p>
+        <p>A streamable-HTTP MCP server at <code>/mcp</code> (Bearer <code>MCP_TOKEN</code>) exposes the whole system: <code>list_workspaces</code>, <code>list_nodes</code>, <code>list_sessions</code>, <code>start_session</code>, <code>send_to_session</code>, <code>get_activity</code>, <code>get_notes</code>, <code>append_note</code>, <code>create_task</code>.</p>
       </article>
       <article class="panel">
         <h3>Identity</h3>
@@ -315,11 +306,13 @@ crimson  linux     online  hermes,bash
 <!-- ── screenshots ──────────────────────────────────────────────────── -->
 <section class="section" id="screens">
   <div class="wrap reveal">
-    <p class="eyebrow">The application</p>
-    <h2>Mission control, in amber.</h2>
-    <p class="lede">
-      One screen for every machine, every repo and every running session you own.
-    </p>
+    <div class="section__head">
+      <p class="eyebrow">The application</p>
+      <h2>Mission control, in amber.</h2>
+      <p class="section__intro">
+        One screen for every machine, every repo and every running session you own.
+      </p>
+    </div>
 
     <div class="shots">
       <figure class="shot shot--wide">
@@ -370,122 +363,102 @@ crimson  linux     online  hermes,bash
 <!-- ── install ──────────────────────────────────────────────────────── -->
 <section class="section" id="install">
   <div class="wrap reveal">
-    <p class="eyebrow">Install</p>
-    <h2>Two commands. No clone, no build.</h2>
+    <div class="section__head">
+      <p class="eyebrow">Install</p>
+      <h2>Run the control plane wherever you like.</h2>
+      <p class="section__intro">
+        The control plane and web app ship as public images —
+        <code>ghcr.io/nook-os/nook-control</code> and <code>nook-web</code> — plus a
+        Helm chart. <code>nook server init</code> scaffolds any of the first four:
+        it generates the secrets, writes the deployment files, and brings it up.
+        Kubernetes installs straight from the chart.
+      </p>
+    </div>
 
-    <ol class="steps">
-      <li class="step">
-        <div class="step__head"><h3>Bring up the control plane</h3></div>
-        <p>Asks how you want to run it, generates its own secrets, and starts it. Docker Compose, Compose behind Traefik, plain <code>docker run</code>, or systemd.</p>
-        <div class="code">
-          <pre><span class="prompt">$ </span>curl -fsSL https://nookos.dev/install.sh | sh</pre>
-        </div>
-        <p class="fineprint">Prefer to read it first? <code>curl -fsSL https://nookos.dev/install.sh -o install.sh</code>, then run it. It verifies the binary against a published SHA-256 either way.</p>
-      </li>
-
-      <li class="step">
-        <div class="step__head"><h3>Add a machine</h3></div>
-        <p>In the UI: <b>Nodes → add node</b>. It hands you this, with the token and the certificate fingerprint already filled in. The machine generates its own keypair, sends only a signing request, and connects outbound — nothing needs to be reachable from the internet.</p>
-        <div class="code">
-          <pre><span class="prompt">$ </span>curl -fsSL https://your-nook/install.sh | sh -s -- --token nook_join_...</pre>
-        </div>
-      </li>
-
-      <li class="step">
-        <div class="step__head"><h3>Optional: the desktop app</h3></div>
-        <p>The same UI in a native window instead of a browser tab — it is the identical build, wrapped in a window. It talks to your control plane like any other client, so there is nothing extra to install on the server and you can skip it entirely.</p>
-
-        <p class="fineprint">
-          Download links are <a href="#top">at the top of this page</a>, and
-          every file sits on the
-          <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a>
-          beside the <code>nook</code> CLI binaries and their checksums.
-        </p>
-
-        <p class="fineprint">
-          macOS builds are signed with a Developer ID certificate and notarised
-          by Apple, so Gatekeeper accepts them without a right-click. The
-          notarisation ticket is stapled to the bundle, which means it also
-          works on a machine that is offline.
-        </p>
-        <p class="fineprint">
-          Windows is not signed yet — SmartScreen will want
-          <b>More info → Run anyway</b> until a certificate is in place.
-        </p>
-      </li>
-
-      <li class="step">
-        <div class="step__head"><h3>Teach your agents</h3></div>
-        <p>NookOS ships as an agent skill. Installs into every agent it finds on the machine — Hermes (and each of its profiles), Claude Code — so they can start and drive sessions across the fleet themselves.</p>
-        <div class="code">
-          <pre><span class="prompt">$ </span>nook skills install</pre>
-        </div>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<!-- ── deploy ───────────────────────────────────────────────────────── -->
-<section class="section" id="deploy">
-  <div class="wrap reveal">
-    <p class="eyebrow">Deploy</p>
-    <h2>Or wire it up yourself.</h2>
-    <p>Images are published to <code>ghcr.io/nook-os/</code> and are public. Everything below is what the installer would have generated.</p>
-
-    <h3>Which modes bring their own Postgres</h3>
-    <p>NookOS does not install or manage Postgres on your host. The two Compose modes run it as a container alongside everything else; the other two expect one you already operate.</p>
     <div class="table-scroll">
       <table>
-        <thead><tr><th scope="col">Mode</th><th scope="col">Postgres</th></tr></thead>
+        <thead>
+          <tr><th scope="col">Method</th><th scope="col">Postgres</th><th scope="col">Reach for it when</th></tr>
+        </thead>
         <tbody>
-          <tr><td>Docker Compose</td><td><b>Included</b> — runs as a service, with a generated password</td></tr>
-          <tr><td>Compose behind Traefik</td><td><b>Included</b> — same</td></tr>
-          <tr><td><code>docker run</code></td><td><b>Bring your own</b> — you supply <code>DATABASE_URL</code></td></tr>
-          <tr><td>systemd + native binary</td><td><b>Bring your own</b> — you supply <code>DATABASE_URL</code></td></tr>
+          <tr><td>Docker Compose</td><td><b>Included</b></td><td>you want the fastest real install</td></tr>
+          <tr><td>Behind a proxy</td><td><b>Included</b></td><td>you terminate TLS at Traefik or nginx</td></tr>
+          <tr><td><code>docker&nbsp;run</code></td><td>Bring your own</td><td>your orchestration isn't Compose</td></tr>
+          <tr><td>systemd</td><td>Bring your own</td><td>you don't want containers at all</td></tr>
+          <tr><td>Kubernetes</td><td>Bring your own</td><td>you already run a cluster</td></tr>
         </tbody>
       </table>
     </div>
-    <p>For a bring-your-own mode the whole prerequisite is a role and a database. The schema needs no action — migrations run at startup.</p>
-    <div class="code">
-      <pre><span class="comment">CREATE ROLE nook LOGIN PASSWORD 'choose-something';</span>
-<span class="comment">CREATE DATABASE nook OWNER nook;</span></pre>
-    </div>
 
-    <h3>docker-compose.yml</h3>
-    <div class="code">
-      <pre>services:
+    <!-- Tabbed install methods. Progressive enhancement: with JS off every
+         panel stays visible and labelled (see .tabpanel__title), so no method
+         is unreachable. main.js turns them into an ARIA tablist. -->
+    <div class="tabs" data-tabs>
+      <div class="tabs__list" role="tablist" aria-label="Control-plane install methods">
+        <button class="tab" type="button" role="tab" id="tab-compose" aria-controls="panel-compose" aria-selected="true">Docker&nbsp;Compose</button>
+        <button class="tab" type="button" role="tab" id="tab-proxy" aria-controls="panel-proxy" aria-selected="false" tabindex="-1">Behind a proxy</button>
+        <button class="tab" type="button" role="tab" id="tab-dockerrun" aria-controls="panel-dockerrun" aria-selected="false" tabindex="-1">docker&nbsp;run</button>
+        <button class="tab" type="button" role="tab" id="tab-systemd" aria-controls="panel-systemd" aria-selected="false" tabindex="-1">systemd</button>
+        <button class="tab" type="button" role="tab" id="tab-k8s" aria-controls="panel-k8s" aria-selected="false" tabindex="-1">Kubernetes</button>
+      </div>
+
+      <!-- Docker Compose -->
+      <div class="tabpanel" role="tabpanel" id="panel-compose" aria-labelledby="tab-compose" tabindex="0">
+        <h3 class="tabpanel__title">Docker Compose</h3>
+        <p>Brings its own Postgres. <code>nook server init</code> writes this file and an <code>.env</code> of unique secrets, then <code>docker&nbsp;compose&nbsp;up&nbsp;-d</code> starts it.</p>
+        <div class="code">
+          <pre><span class="comment"># docker-compose.yml — generated by `nook server init`. Tags are pinned.</span>
+services:
   postgres:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_USER: nook
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: nook
     volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nook"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
 
   control-plane:
-    image: ghcr.io/nook-os/nook-control:v0.2.3
+    image: ghcr.io/nook-os/nook-control:v0.4.10
+    restart: unless-stopped
     env_file: .env
     volumes:
-      - ./agent-certs:/etc/nook:ro
+      - ./agent-certs:/etc/nook:ro   <span class="comment"># agent-listener cert; nodes pin its fingerprint</span>
+    depends_on:
+      postgres: { condition: service_healthy }
     ports:
       - "8080:8080"   <span class="comment"># API + UI backend</span>
       - "8081:8081"   <span class="comment"># nodes (mutual TLS)</span>
 
   web:
-    image: ghcr.io/nook-os/nook-web:v0.2.3
+    image: ghcr.io/nook-os/nook-web:v0.4.10
+    restart: unless-stopped
     environment:
       CONTROL_PLANE_ORIGIN: http://control-plane:8080
+    depends_on: [control-plane]
     ports: ["80:80"]
 
 volumes: { pgdata: }</pre>
-    </div>
+        </div>
+        <p class="fineprint">Upgrades are deliberate: bump the pinned tag and <code>docker compose pull &amp;&amp; docker compose up -d</code>. Migrations run in the control plane at startup.</p>
+      </div>
 
-    <h3>Behind Traefik</h3>
-    <p>The API is an ordinary HTTP router. The <b>agent port is not</b>: it must be a TCP router in <b>passthrough</b> mode. The control plane has to see each node's client certificate itself, so a proxy may route that stream but must never open it — terminating TLS there breaks mutual authentication and the fingerprint pin together.</p>
-    <div class="code">
-      <pre>labels:
+      <!-- Behind a proxy -->
+      <div class="tabpanel" role="tabpanel" id="panel-proxy" aria-labelledby="tab-proxy" tabindex="0">
+        <h3 class="tabpanel__title">Behind a proxy</h3>
+        <p>The API is an ordinary HTTP router. The <b>agent port is not</b>: it must be a TCP router in <b>passthrough</b> mode. The control plane has to see each node's client certificate itself — terminating TLS in front breaks mutual authentication and the fingerprint pin together.</p>
+        <div class="code">
+          <pre><span class="comment"># Traefik labels — from `nook server init` → "Compose behind Traefik".</span>
+labels:
   - "traefik.enable=true"
-  - "traefik.http.routers.nook-api.rule=Host(`nook.example.com`)"
+  - "traefik.http.routers.nook-api.rule=Host(`nook.example.com`)
+       &amp;&amp; (PathPrefix(`/api`) || PathPrefix(`/mcp`)
+       || PathPrefix(`/healthz`) || PathPrefix(`/.well-known`))"
   - "traefik.http.routers.nook-api.entrypoints=websecure"
   - "traefik.http.routers.nook-api.tls=true"
   - "traefik.http.services.nook-api.loadbalancer.server.port=8080"
@@ -495,13 +468,10 @@ volumes: { pgdata: }</pre>
   - "traefik.tcp.routers.nook-agent.entrypoints=websecure"
   - "traefik.tcp.routers.nook-agent.tls.passthrough=true"
   - "traefik.tcp.services.nook-agent.loadbalancer.server.port=8081"</pre>
-    </div>
-    <p class="fineprint">Point <code>agent.nook.example.com</code> at the host directly. Any hop that terminates TLS — a CDN, another proxy in front — will break node authentication, and the symptom is a certificate that is not the one you generated.</p>
-
-    <h3>Behind nginx</h3>
-    <p>Same split. nginx proxies the API; nodes get a <code>stream</code> block, which forwards TCP without decrypting it.</p>
-    <div class="code">
-      <pre>server {
+        </div>
+        <p>Prefer nginx? Proxy the API normally; give the nodes a <code>stream</code> block, which forwards TCP without decrypting it.</p>
+        <div class="code">
+          <pre>server {
   server_name nook.example.com;
   location / { proxy_pass http://127.0.0.1:80; }
   location /api/ {
@@ -517,21 +487,144 @@ stream {
   map $ssl_preread_server_name $backend {
     agent.nook.example.com 127.0.0.1:8081;
   }
-  server {
-    listen 443;
-    ssl_preread on;
-    proxy_pass $backend;
-  }
+  server { listen 443; ssl_preread on; proxy_pass $backend; }
 }</pre>
+        </div>
+        <p class="fineprint">Point <code>agent.nook.example.com</code> at the host directly. Any hop that terminates TLS — a CDN, another proxy in front — breaks node authentication, and the symptom is a certificate that is not the one you generated.</p>
+      </div>
+
+      <!-- docker run -->
+      <div class="tabpanel" role="tabpanel" id="panel-dockerrun" aria-labelledby="tab-dockerrun" tabindex="0">
+        <h3 class="tabpanel__title">docker run</h3>
+        <p>For orchestration that isn't Compose. Bring your own Postgres — the whole prerequisite is a role and a database, with its URL as <code>DATABASE_URL</code> in <code>.env</code>. The schema needs no action; migrations run at startup.</p>
+        <div class="code">
+          <pre><span class="comment">-- on your Postgres</span>
+CREATE ROLE nook LOGIN PASSWORD 'choose-something';
+CREATE DATABASE nook OWNER nook;</pre>
+        </div>
+        <div class="code">
+          <pre><span class="comment"># run-containers.sh — written by `nook server init` → "docker run".</span>
+docker network create nook 2>/dev/null || true
+
+docker run -d --name nook-control --network nook --restart unless-stopped \
+  --env-file .env \
+  -v "$PWD/agent-certs:/etc/nook:ro" \
+  -p 8080:8080 -p 8081:8081 \
+  ghcr.io/nook-os/nook-control:v0.4.10
+
+docker run -d --name nook-web --network nook --restart unless-stopped \
+  -e CONTROL_PLANE_ORIGIN=http://nook-control:8080 \
+  -p 80:80 \
+  ghcr.io/nook-os/nook-web:v0.4.10</pre>
+        </div>
+      </div>
+
+      <!-- systemd -->
+      <div class="tabpanel" role="tabpanel" id="panel-systemd" aria-labelledby="tab-systemd" tabindex="0">
+        <h3 class="tabpanel__title">systemd</h3>
+        <p>No containers. <code>nook server init</code> → <b>systemd + native binary</b> writes a <code>0600</code> <code>.env</code> against a Postgres you already run, and stops there — you run the control plane under your own init manager with that env.</p>
+        <div class="code">
+          <pre><span class="comment"># .env — generated. The process reads these; DATABASE_URL is your Postgres.</span>
+APP_ENV=production
+CONTROL_PLANE_BIND=0.0.0.0:8080
+PUBLIC_BASE_URL=https://nook.example.com
+WEB_ORIGIN=https://nook.example.com
+DATABASE_URL=postgres://nook:...@db.example.com:5432/nook
+SESSION_SECRET=...        <span class="comment"># 32+ chars; rotating it signs everyone out</span>
+SECRETS_KEY=...           <span class="comment"># at-rest encryption. LOSING THIS LOSES stored secrets</span>
+MCP_TOKEN=...</pre>
+        </div>
+        <div class="code">
+          <pre><span class="comment"># /etc/systemd/system/nook-control.service — example; the installer writes only .env</span>
+[Unit]
+Description=NookOS control plane
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+EnvironmentFile=/opt/nook/.env
+ExecStart=/usr/local/bin/nook-control
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target</pre>
+        </div>
+        <p class="fineprint">Serve the web app with the <code>nook-web</code> image (or any static host) proxying <code>/api</code>, <code>/mcp</code>, <code>/healthz</code> and <code>/.well-known</code> to the control plane on <code>:8080</code>.</p>
+      </div>
+
+      <!-- Kubernetes -->
+      <div class="tabpanel" role="tabpanel" id="panel-k8s" aria-labelledby="tab-k8s" tabindex="0">
+        <h3 class="tabpanel__title">Kubernetes</h3>
+        <p>External Postgres only — no bundled database. The chart consumes exactly one Kubernetes Secret, <b>by reference</b>; it never stores secret material itself. Needs Kubernetes&nbsp;≥&nbsp;1.23, Helm&nbsp;3 and an ingress controller.</p>
+        <div class="code">
+          <pre><span class="comment"># 1. Create the Secret the chart references (external Postgres + session secret).</span>
+kubectl create secret generic nook-control-secrets \
+  --from-literal=DATABASE_URL='postgres://user:pass@db.example.com:5432/nook' \
+  --from-literal=SESSION_SECRET="$(openssl rand -hex 32)"
+
+<span class="comment"># 2. Get starter values (writes nook-values.yaml, downloads nothing).</span>
+curl -fsSL https://&lt;your-nook&gt;/install.sh | sh -s -- --k8s
+
+<span class="comment"># 3. Install from the published chart. Add --version X.Y.Z to pin.</span>
+helm install nook oci://ghcr.io/nook-os/charts/nook-control -f nook-values.yaml</pre>
+        </div>
+        <div class="code">
+          <pre><span class="comment"># nook-values.yaml — nothing here is a secret.</span>
+existingSecret: nook-control-secrets   <span class="comment"># the Secret created above</span>
+
+config:
+  publicBaseUrl: https://nook.example.com
+  webOrigin: https://nook.example.com
+
+ingress:
+  host: nook.example.com
+  <span class="comment"># TLS: reference a Secret, or drive cert-manager with annotations.</span>
+  <span class="comment"># tls: { enabled: true, secretName: nook-tls }</span>
+
+<span class="comment"># Agent mTLS listener (:8081) — how external nodes join. Off by default; its</span>
+<span class="comment"># TLS terminates INSIDE the control plane, so anything in front must be L4/passthrough.</span>
+agent:
+  enabled: false
+  <span class="comment"># publicUrl: agent.nook.example.com:8081</span>
+  <span class="comment"># tlsSecret: nook-agent-tls</span></pre>
+        </div>
+        <p class="fineprint">Keep credentials in Vault, Google Secret Manager or AWS? The External Secrets Operator syncs your backend into that same Secret — copy-adjust examples per backend live in <code>charts/nook-control/examples/secrets/</code>.</p>
+      </div>
     </div>
+
+    <!-- Post-install, once the control plane is up. -->
+    <h3 class="install__next">Once it's up</h3>
+    <ol class="steps">
+      <li class="step">
+        <div class="step__head"><h3>Add a machine</h3></div>
+        <p>In the UI: <b>Nodes → add node</b>, then run this on the machine — the token and certificate fingerprint are filled in for you. It generates its own keypair, sends only a signing request, and connects <b>outbound</b>; nothing needs to be reachable from the internet.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>curl -fsSL https://&lt;your-control-plane&gt;/install.sh | sh -s -- --token nook_join_...</pre>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__head"><h3>Teach your agents</h3></div>
+        <p>NookOS ships as an agent skill. <code>nook skills install</code> writes it into every agent installation on the machine — Claude Code, Hermes and its profiles — so they can start and drive sessions across the fleet themselves.</p>
+        <div class="code">
+          <pre><span class="prompt">$ </span>nook skills install</pre>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step__head"><h3>Desktop app (optional)</h3></div>
+        <p>The same UI in a native window — the identical build, wrapped in a window, talking to your control plane like any other client. Nothing extra on the server; skip it entirely if you prefer a browser tab. <a href="#top">Downloads are at the top</a>, and on the <a href="https://github.com/nook-os/nook-os/releases/latest">latest release</a> beside the <code>nook</code> binaries and checksums.</p>
+      </li>
+    </ol>
   </div>
 </section>
 
 <!-- ── security ─────────────────────────────────────────────────────── -->
 <section class="section" id="security">
   <div class="wrap reveal">
-    <p class="eyebrow">Posture</p>
-    <h2>Self-hosted means self-hosted.</h2>
+    <div class="section__head">
+      <p class="eyebrow">Posture</p>
+      <h2>Self-hosted means self-hosted.</h2>
+    </div>
 
     <div class="table-scroll">
       <table>
@@ -554,8 +647,10 @@ stream {
 <!-- ── faq ──────────────────────────────────────────────────────────── -->
 <section class="section" id="faq">
   <div class="wrap reveal">
-    <p class="eyebrow">Questions</p>
-    <h2>The ones people actually ask.</h2>
+    <div class="section__head">
+      <p class="eyebrow">Questions</p>
+      <h2>The ones people actually ask.</h2>
+    </div>
 
     <div class="faq">
       <details>
