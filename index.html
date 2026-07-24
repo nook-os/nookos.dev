@@ -389,9 +389,14 @@
       <p class="eyebrow">Install</p>
       <h2>Run the control plane wherever you like.</h2>
       <p class="section__intro">
-        Public images, a Helm chart, and <code>nook server init</code> to write
-        the deployment files for you. Pick how you want to run it.
+        One script bootstraps any of them — it asks whether this machine is a
+        control plane, a node, or a hand-off to Helm, then writes the
+        deployment files for you.
       </p>
+      <div class="code">
+        <pre><span class="prompt">$ </span>curl -fsSL https://nookos.dev/install.sh | sh</pre>
+      </div>
+      <p class="fineprint">Prefer to read it before piping it to a shell? <a href="https://github.com/nook-os/nookos.dev/blob/main/install.sh">It's ~300 lines</a>, and downloads are verified against a published SHA-256.</p>
     </div>
 
     <div class="table-scroll">
@@ -583,7 +588,7 @@ kubectl create secret generic nook-control-secrets \
   --from-literal=SESSION_SECRET="$(openssl rand -hex 32)"
 
 <span class="comment"># 2. Get starter values (writes nook-values.yaml, downloads nothing).</span>
-curl -fsSL https://&lt;your-nook&gt;/install.sh | sh -s -- --k8s
+curl -fsSL https://nookos.dev/install.sh | sh -s -- --k8s
 
 <span class="comment"># 3. Install from the published chart. Add --version X.Y.Z to pin.</span>
 helm install nook oci://ghcr.io/nook-os/charts/nook-control -f nook-values.yaml</pre>
