@@ -32,6 +32,27 @@
   --measure: 68ch;
   --gutter: 24px;
   --max: 1180px;
+
+  /* Type scale — one ladder the whole page climbs, so nothing is sized by
+     eye. Fluid only where the jump between phone and desktop earns it. */
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-md: clamp(15px, 1.6vw, 17px);
+  --text-lg: clamp(17px, 2vw, 20px);
+  --text-h3: clamp(16px, 1.9vw, 19px);
+  --text-h2: clamp(23px, 3.4vw, 33px);
+  --text-h1: clamp(28px, 6vw, 56px);
+
+  /* Spacing scale — every gap and rhythm value comes from here. */
+  --space-1: 6px;
+  --space-2: 10px;
+  --space-3: 14px;
+  --space-4: 20px;
+  --space-5: 28px;
+  --space-6: 40px;
+  --space-7: 56px;
+  --space-8: 80px;
 }
 
 *,
@@ -137,15 +158,15 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(28px, 6.2vw, 58px);
+  font-size: var(--text-h1);
 }
 
 h2 {
-  font-size: clamp(23px, 3.6vw, 34px);
+  font-size: var(--text-h2);
 }
 
 h3 {
-  font-size: clamp(16px, 2vw, 19px);
+  font-size: var(--text-h3);
 }
 
 p {
@@ -177,19 +198,44 @@ samp {
   border-top: 0;
 }
 
+/* One header pattern for every section: eyebrow → h2 → intro, with the same
+   rhythm and the same measure everywhere, so the page reads as one system
+   rather than a stack of differently-spaced blocks. */
+.section__head {
+  max-width: 62ch;
+  margin-bottom: var(--space-6);
+}
+
+/* The head owns the gap to the body; whatever follows starts flush, so every
+   section has the same head-to-body rhythm regardless of what the body is. */
+.section__head + * {
+  margin-top: 0;
+}
+
 .eyebrow {
-  font-size: 12px;
+  font-size: var(--text-xs);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
   text-shadow: var(--glow);
-  margin-bottom: 14px;
+  margin-bottom: var(--space-3);
 }
 
-.lede {
+/* The one-or-two-sentence line under a section heading. `.lede` and the older
+   `.section__lede` are kept as aliases so every intro reads identically. */
+.section__intro,
+.lede,
+.section__lede {
   color: var(--fg-dim);
-  font-size: clamp(15px, 1.7vw, 17px);
-  margin-top: 16px;
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  margin-top: var(--space-4);
+  max-width: 62ch;
+}
+
+.section__head .section__intro,
+.section__head .lede {
+  margin-top: var(--space-3);
 }
 
 .skip {
@@ -1200,136 +1246,10 @@ details p + p {
 .fineprint code {
   font-size: 0.95em;
 }
-/* Sub-headings inside the Deploy section, between the prose and each snippet. */
-#deploy h3 {
-  margin-top: 2.2rem;
-  margin-bottom: 0.6rem;
-  font-size: 1.05rem;
-  color: var(--fg-bright);
-  letter-spacing: 0.01em;
-}
 
-/* ── hero install ───────────────────────────────────────────────────────
-   The one command the page exists to hand over. Same terminal chrome as the
-   demo shell, so it reads as something you run rather than a decorated link —
-   and given enough weight that it, not the headline, is what the eye lands on. */
-.term--install {
-  margin: 1.8rem 0 0.9rem;
-  max-width: 44rem;
-  border-color: var(--accent);
-  box-shadow: var(--glow-strong);
-}
-.term--install .term__bar {
-  border-bottom-color: var(--border-bright);
-}
-.term--install .term__title {
-  color: var(--accent);
-}
-.code--hero {
-  border: 0;
-  border-radius: 0;
-  background: var(--terminal-bg);
-  margin: 0;
-}
-.code--hero {
-  /* Positioning context for the copy button, which centres against THIS box
-     rather than the whole terminal — otherwise it aligns to the title bar. */
-  position: relative;
-}
-.code--hero pre {
-  font-size: 1.15rem;
-  line-height: 1.5;
-  /* Room on the right so the copy button never sits on top of the command. */
-  padding: 1.05rem 4.75rem 1.05rem 1.15rem;
-  overflow-x: auto;
-  color: var(--fg-bright);
-}
-/* Centred on the command, not pinned to a corner. There is one line here and
-   one button; anything else looks like it came loose. */
-.code--hero .copy {
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-}
-.code--hero .prompt {
-  color: var(--accent);
-}
-.hero__install-note {
-  margin: 0 0 1.4rem;
-  max-width: 44rem;
-  font-size: 0.85rem;
-  line-height: 1.55;
-  color: var(--fg-faint);
-}
-.hero__install-note a {
-  color: var(--fg-dim);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.hero__install-note a:hover {
-  color: var(--accent);
-}
-
-/* The demo section that used to live in the hero. */
-.section__lede {
-  color: var(--fg-dim);
-  max-width: 46rem;
-  margin-bottom: 1.4rem;
-}
+/* The demo section's intro line and its boot readout spacing. */
 .section--demo .boot {
-  margin-bottom: 1.2rem;
-}
-
-@media (max-width: 640px) {
-  /* Wrap rather than scroll. It is one short command, and a horizontal
-     scrollbar under the single thing the page is asking you to run reads as
-     something being cut off. */
-  .code--hero pre {
-    font-size: 0.95rem;
-    white-space: pre-wrap;
-    word-break: break-word;
-    overflow-x: visible;
-    padding: 0.9rem 1rem 2.7rem;
-  }
-  /* Below the command on a phone, where there is no room beside it. */
-  .term--install .copy {
-    top: auto;
-    bottom: 0.5rem;
-    right: 0.6rem;
-  }
-}
-
-/* ── desktop download ───────────────────────────────────────────────────
-   The promoted button plus a note about what it gets you. Detection can be
-   wrong, so the full list below stays available rather than hidden. */
-.dl {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  flex-wrap: wrap;
-  margin: 1rem 0 0.5rem;
-}
-.dl__note {
-  font-size: 0.82rem;
-  color: var(--fg-faint);
-}
-.dl__all {
-  margin: 0.4rem 0 0.9rem;
-  font-size: 0.88rem;
-}
-.dl__all summary {
-  cursor: pointer;
-  color: var(--fg-dim);
-  padding: 0.2rem 0;
-}
-.dl__all summary:hover {
-  color: var(--accent);
-}
-.dl__list {
-  margin: 0.6rem 0 0.4rem;
-  padding-left: 1.1rem;
-  line-height: 1.8;
-  color: var(--fg-dim);
+  margin-bottom: var(--space-4);
 }
 
 /* ── desktop apps, in the hero ──────────────────────────────────────────
@@ -1398,21 +1318,6 @@ details p + p {
   color: var(--accent);
 }
 
-.apps__note {
-  margin: 0.7rem 0 0;
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: var(--fg-faint);
-}
-.apps__note a {
-  color: var(--fg-dim);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.apps__note a:hover {
-  color: var(--accent);
-}
-
 @media (max-width: 560px) {
   .apps__row {
     grid-template-columns: 1fr;
@@ -1443,4 +1348,109 @@ details p + p {
 .app__meta a:hover {
   color: var(--accent);
   border-bottom-color: var(--accent);
+}
+
+/* ── tabbed install ─────────────────────────────────────────────────────
+   Progressive enhancement. With JS off every panel is visible and titled, so
+   no install method is unreachable (that is the whole contract). The head
+   script adds `.js`; that alone collapses the stack to just the first panel
+   (no flash of five); main.js then adds [data-enhanced] and drives an ARIA
+   tablist, keeping [hidden] in sync with the selected tab. */
+.tabs {
+  margin-top: var(--space-6);
+}
+
+.tabs__list {
+  display: flex;
+  gap: 2px;
+  /* Five labels scroll sideways inside their own strip on a phone rather than
+     wrapping raggedly or pushing the page width out. */
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+}
+.tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--fg-dim);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  /* ≥44px tap target. */
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  cursor: pointer;
+  white-space: nowrap;
+  margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.tab:hover {
+  color: var(--accent);
+}
+.tab[aria-selected="true"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  text-shadow: var(--glow);
+}
+
+.tabpanel {
+  padding-top: var(--space-5);
+}
+.tabpanel__title {
+  margin-bottom: var(--space-3);
+}
+.tabpanel > p {
+  margin-top: var(--space-3);
+}
+.tabpanel > p:first-of-type {
+  margin-top: 0;
+}
+
+/* No-JS / not-yet-enhanced: panels stack as a labelled list, divided. */
+.tabpanel + .tabpanel {
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+/* `.js` present but main.js not run yet: show only the first (default) panel,
+   so the other four never flash in. Scoped so it stops applying the moment
+   [data-enhanced] lands. */
+.js .tabs:not([data-enhanced]) .tabpanel:not(:first-of-type) {
+  display: none;
+}
+
+/* Enhanced: one panel at a time, no dividers, and the visible title folds
+   away — the selected tab already names the panel (aria-labelledby). */
+.tabs[data-enhanced] .tabpanel {
+  margin-top: 0;
+  border-top: 0;
+}
+.tabs[data-enhanced] .tabpanel__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Post-install steps, set off from the tabs above them. */
+.install__next {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
 }
