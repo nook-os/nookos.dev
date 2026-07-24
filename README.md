@@ -37,20 +37,19 @@ inside its own container.
 
 ## Screenshots
 
-Every image in `assets/screenshots/` is currently a **placeholder** and needs to
-be replaced with a real capture before this site goes live. The markup already
-declares `width="2560" height="1440"`, so shoot 16:9 and the layout will not
-shift.
+Captured at 2560×1440 from a local dev instance seeded with demo data
+(nodes `azul`/`crimson`/`slate`, the demo workspaces, board `NOOK`). The markup
+declares `width="2560" height="1440"`, so replacements should stay 16:9.
 
-| File | Shot |
-|---|---|
-| `dashboard.png` | Dashboard — nodes, workspaces, sessions, activity feed |
-| `session-claude.png` | A session with Claude Code live in the terminal |
-| `workspaces.png` | Workspaces list, showing multi-node checkouts |
-| `board.png` | Kanban board with cards across all four columns |
-| `nodes.png` | Nodes page with the live capacity bars |
-| `new-work.png` | The New Work modal, open |
-| `settings-tokens.png` | Settings → Access tokens |
+| File | Shot | Status |
+|---|---|---|
+| `dashboard.png` | Dashboard — nodes, workspaces, sessions, activity feed | real |
+| `session-claude.png` | A session with Claude Code live in the terminal | **placeholder** — needs a machine with `claude` installed |
+| `workspaces.png` | Workspaces list, showing multi-node checkouts | real |
+| `board.png` | Kanban board with cards across all four columns | real |
+| `nodes.png` | Nodes page with the live capacity bars | real |
+| `new-work.png` | The New Work modal, open | real |
+| `settings-tokens.png` | Settings → Access tokens | real |
 
 Two rules when capturing:
 
